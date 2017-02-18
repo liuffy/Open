@@ -1,6 +1,6 @@
 # Open
 
-![Open logo](http://res.cloudinary.com/liuffy/image/upload/c_scale,q_100,w_243/v1487453773/open_cursive_d0zsgn.png)
+![Open logo](http://res.cloudinary.com/liuffy/image/upload/c_scale,q_100,w_128/v1487453773/open_cursive_d0zsgn.png)
 
 ### Purpose 
 
