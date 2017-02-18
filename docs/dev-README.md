@@ -1,5 +1,7 @@
 # Open
 
+![Open logo](http://res.cloudinary.com/liuffy/image/upload/c_scale,q_100,w_197/v1487453580/open-logo_va1nop.png)
+
 ### Purpose 
 
 Open is a Google Chrome Extension made with React and Redux that makes it easy for users to check if an establishment is open without navigating to any websites such as Yelp or Google Maps.
@@ -7,7 +9,7 @@ Open is a Google Chrome Extension made with React and Redux that makes it easy f
 
 ## Background
 
-While websites such as Yelp provide a wealth of information about different businesses such as reviews, menus, and contact information, it is often case that a user is on the go and **simply wants to know if a place is open or not.** *Open* extracts this valuable piece of information, saving users the energy of having to parse all the information presented on a page. 
+While websites such as Yelp provide a wealth of information about different businesses such as reviews, menus, and contact information, it is often case that a user is on the go and *simply wants to know if a place is open or not.* **Open** extracts this valuable piece of information, saving users the energy of having to parse all the information presented on a page. 
 
 In addition, Open saves the user from typing in their location by using geolocation API to determine where they are.
 
@@ -16,13 +18,18 @@ In addition, Open saves the user from typing in their location by using geolocat
 With this extension, users will be able to:
 
 - [ ] Check if a business is open without navigating to any external sites (clicking the icon in their extensions bar will open up a popup)
-  - [ ] If a business is closed, it will inform the user of the hours for the next day. 
+  - [ ] If a business is closed, it will inform the user of the hours for the next day. (If the business is still closed the next day, they can continue clicking the "Next" button for the subsequent days.)
 - [ ] Find the matching location closest to their location. 
   - [ ] If the user wants to see the hours of all franchises of a chain in a city, they can opt out of the 'Closest to me' option and have it list up to five matching locations.
 - [ ] Easily navigating back to the search screen so they can perform additional searches. 
 
 
 ### Wireframes
+
+![wireframe1]()
+
+![wireframe2]()
+*Wireframes for 'Open'*
 
 Open allows the user to quickly find the matching business that is closest to them by using the geolocation API to determine the user's location, and then comparing that data to the data provided by the Yelp API. 
 
@@ -35,10 +42,10 @@ Submitting an query via the form on the popup sends an AJAX request to the Yelp 
 
 There will be several React components used to build this extension: 
 
-- `Search Form`: will be the input form for submitting queries
+- `SearchForm`: will be the input form for submitting queries
 - `SingleResult`: will display the result, based on the user's location (Option 1) as automatically calculated through using the geolocation API.
 - `ResultList`: will display the results, based on the city inputted by the user (Option2)
-  -  `ResultList` will contain an unordered list of `ResultIndexItem`s
+  -  `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
 
 There will also be an HTML file to display the content:
 
@@ -52,8 +59,7 @@ There will also be an HTML file to display the content:
 - A completed `package.json`
 - A completed `manifest.json`
 
-
-**Day 2**: Work on identifying the colors used in the DOM by class and other attributes, and create and render a new DOM with different colors.  By the end of the day, we will have:
+**Day 2**: 
 
 - The ability to identify all colors (Munyo)
 - A new HTML file that gets rendered in place of the current DOM, using different colors (Ryan)
@@ -86,7 +92,10 @@ There will also be an HTML file to display the content:
 ### Plan for getting users and reviews
 
 - Will share link to Google Chrome extension in: 
-- [ ] Facebook groups, requesting reviews. 
+- [ ] Facebook groups such as:
+  - [ ] **Techy Wendy** (Tech-focused group for Wellesley College alumni) 
+  - [ ] **Community** (large Facebook group for Wellesley College alumni) 
+  - [ ] **Wellesley By the Bay** (Facebook group for Wellesley alumni living in the bay area) 
 - [ ] Reddit forums such as:
   - [ ] **/r/chrome_extensions/**
   - [ ] **/r/webdev/**
