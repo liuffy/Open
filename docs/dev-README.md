@@ -33,7 +33,9 @@ With this extension, users will be able to:
 Open allows the user to quickly find the matching business that is closest to them by using the geolocation API to determine the user's location, and then comparing that data to the data provided by the Yelp API. 
 
 
-### Technologies & Technical Challenges 
+## Technologies & Technical Challenges 
+
+### Technologies
 
 This extension will be implemented using standard Chrome extension technology: **Javascript, HTML, and CSS**. In addition, it uses **React/Redux** to handle state.
 
@@ -50,6 +52,11 @@ There will also be an HTML file to display the content:
 
 - `popup.html` - page shown when the extension button is clicked. Styled by various CSS files.
 
+### Technical Challenges
+
+* The search mechanism will need to be accurate, otherwise the app could present misleading information. 
+* Holiday hours for a business are often drastically different from its regular business hours. Will need to incorporate a calendar that adds a warning if the current day is a national holiday.
+* Will try to add link to displayed address that opens up a tab to a Google Maps displaying the location of the business. 
 
 ## Implementation Timeline
 
@@ -120,8 +127,8 @@ By the end of the day:
 
 ## Bonus Features :sparkles:
 
-- [ ] Save favorites: Add panel that shows results for saved locations.
+- [ ] Save favorites: Add panel that shows results for saved locations. :sparkling_heart:
 - [ ] Options menu: Allow users to customize their experience by being able to choose aspects such as:
-  - [ ] Whether ti display time in 24-hour format or 12-hour format
-  - [ ] Number of results shown for location - based searching 
+  - [ ] Whether to display time in 24-hour format or 12-hour format
+  - [ ] Number of results shown for each query.
 
