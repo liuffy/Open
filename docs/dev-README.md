@@ -28,10 +28,7 @@ With this extension, users will be able to:
 
 ### Wireframes
 
-![wireframe1]()
-
-![wireframe2]()
-*Wireframes for 'Open'*
+![wireframe1](http://res.cloudinary.com/liuffy/image/upload/q_100/v1487531198/open_wireframe1_j3gufp.png)
 
 Open allows the user to quickly find the matching business that is closest to them by using the geolocation API to determine the user's location, and then comparing that data to the data provided by the Yelp API. 
 
