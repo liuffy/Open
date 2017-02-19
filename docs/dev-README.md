@@ -9,7 +9,9 @@ Open is a Google Chrome Extension made with React and Redux that makes it easy f
 
 ## Background
 
-While websites such as Yelp provide a wealth of information about different businesses such as reviews, menus, and contact information, it is often case that a user is on the go and *simply wants to know if a place is open or not.* **Open** extracts this valuable piece of information, saving users the energy of having to parse all the information presented on a page. 
+While websites such as Yelp provide a wealth of information about different businesses such as reviews, menus, and contact information, it is often case that a user is on the go and *simply wants to know if a place is open or not.* 
+
+**Open** extracts this valuable piece of information, saving users the energy of having to parse all the information presented on a page. 
 
 In addition, Open saves the user from typing in their location by using geolocation API to determine where they are.
 
@@ -20,7 +22,7 @@ With this extension, users will be able to:
 - [ ] Check if a business is open without navigating to any external sites (clicking the icon in their extensions bar will open up a popup)
   - [ ] If a business is closed, it will inform the user of the hours for the next day. (If the business is still closed the next day, they can continue clicking the "Next" button for the subsequent days.)
 - [ ] Find the matching location closest to their location. 
-  - [ ] If the user wants to see the hours of all franchises of a chain in a city, they can opt out of the 'Closest to me' option and have it list up to five matching locations.
+  - [ ] If the user wants to see the hours of all franchises of a chain in a city, they can opt out of the 'Closest to me' option and have it list up to five locations located in the city inputted by the user.  
 - [ ] Easily navigating back to the search screen so they can perform additional searches. 
 
 
@@ -45,7 +47,7 @@ There will be several React components used to build this extension:
 - `SearchForm`: will be the input form for submitting queries
 - `SingleResult`: will display the result, based on the user's location (Option 1) as automatically calculated through using the geolocation API.
 - `ResultList`: will display the results, based on the city inputted by the user (Option2)
-  -  `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
+  - `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
 
 There will also be an HTML file to display the content:
 
@@ -54,40 +56,57 @@ There will also be an HTML file to display the content:
 
 ## Implementation Timeline
 
-**Day 1**: Get started on the infrastructure of the extension, following [this guide](https://developer.chrome.com/extensions/getstarted) from Chrome. Will also do some research on purpose and structure of a `manifest.json` file. By the end of the day, the project folder will will have:
+**Day 1: Learning, Tutorialing**
+* Learn the essential infrastructure of a Chrome Extension by following the [tutorial provided by Google Chrome.](https://developer.chrome.com/extensions/getstarted). Build a test extension in a separate folder. 
+* Do some research on purpose and structure of a `manifest.json` file. 
+* Then, start building the infrastructure for personal extension. By the end of the day, the project folder will will have:
 
-- A completed `package.json`
-- A completed `manifest.json`
+- [ ] A completed `package.json`
+- [ ] A completed `manifest.json`
+- [ ] Script for Google Analytics 
 
-**Day 2**: 
+**Day 2: Basic UI, Geolocation API, Yelp API**
+* Add main entry point of the extension. 
+* Flesh out basic UI.
+* Research geolocation API and Yelp API.
 
-- The ability to identify all colors (Munyo)
-- A new HTML file that gets rendered in place of the current DOM, using different colors (Ryan)
+By the end of the day, the project folder will have:
+- [ ] `popup.html` - main entry point of the app as defined in the manifest file.
+- [ ] `popup.js` - use javascript file by the [the Chromium Authors](http://the-chromium-authors.software.informer.com/)
+- [ ] `webpack.config.js` - webpack bundling file
+- [ ] `package.json` - contains dependencies (i.e. babel-core, react, redux, etc.)
 
-**Day 3**: Dedicate this day to correctly replacing colors with their grey scale or high-contrast equivalents.  By the end of the day:
+**Day 3: Redux Cycles - Part 1**
+* Create utils for API calls, action creators, reducers, redux store.
+- [ ] `yelp_api_utils.js` - handle queries for Yelp API
+  - [ ] Test API calls in Dev Tools 
+- [ ] `yelp_actions.js` - action creators 
+- [ ] `yelp_reducer.js` - process action.data
+- [ ] `root_reducer.js` - gathers child reducers' results into single state object
+- [ ] `store.js` - holds the whole state tree of the app
 
-- Implement an algorithm for replacing colors with grey scale tones (Ryan)
-- At least understand (and hopefully implement) and algorithm for replacing colors with high-contrast equivalents (Munyo)
-- Render a new DOM that contains each of these color equivalents (Ryan)
+**Day 4-5: Redux Cycles - Part 2**
+* Create components for extension.
+- [ ] `SearchForm`: will be the input form for submitting queries
+- [ ] `SingleResult`: will display the result, based on the user's location (Option 1) as automatically calculated through using the geolocation API.
+- [ ] `ResultList`: will display the results, based on the city inputted by the user (Option2)
+  - [ ] `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
 
-**Day 4**: Create the settings page and connect the settings to the color change logic.  If time, create high-contrast grey scale and low-contrast algorithms as well.  By the end of the day:
+**Day 6: CSS Styling, demo page for chrome extension** 
 
-- Fully implemented settings changes that re-render a differently colored DOM (Ryan)
-- A detailed README (Ryan)
-- A polished Chrome store page, sent to our networks to begin marketing/downloads (Munyo)
-- If time, implement the final two features: normal color to low contrast and normal to high-contrast grey scale (Both)
+By the end of the day:
+- [ ] Have components/HTML styled nicely using CSS.
+- [X] Create icon for extension
+- [ ] Set up github page for the extension.
+- [ ] Mock up wireframes for how the demo page will look 
+- [ ] Grab nice looking screenshots from the chrome extension
+- [ ] Make a few gifs that shows off the key features of the chrome extension
 
-**Day 5**: Create demo page for chrome extension. By the end of the day:
-- Set up github pages (Ryan)
-- Mock up wireframes for how the demo page will look (Both)
-- Grab nice looking screenshots from the chrome extension (Munyo)
-- Make a few gifs that shows off the key features of the chrome extension (Munyo)
+**Day 7: Deploying and distribution**
+- [ ] Compress extension folder into a .zip file. 
+- [ ] Add new item on the developer dashboard.
+- [ ] Share link to Google Chrome extension and demo page on Facebook, Tumblr, and Reddit. 
 
-**Day 6**: Create demo page for chrome extension. By the end of the day:
-- Set up github pages (Ryan)
-- Mock up wireframes for how the demo page will look (Both)
-- Grab nice looking screenshots from the chrome extension (Munyo)
-- Make a few gifs that shows off the key features of the chrome extension (Munyo)
 
 ### Plan for getting users and reviews
 
