@@ -2,6 +2,7 @@
     "name": "Open",
     "version": "0.0.1",
     "manifest_version": 2,
+
 		"icons": { 
 			"48": "icons/icon48.png",
 			// "16": "icons/icon16.png",
@@ -13,7 +14,8 @@
 	    "activeTab",
 	    "tabs",
 	    "https://ajax.googleapis.com/",
-	    ""
+			"http://*/*",  
+			"https://*/*"
   ],
 
     "browser_action": {

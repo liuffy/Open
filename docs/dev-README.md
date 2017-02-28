@@ -66,8 +66,8 @@ There will also be an HTML file to display the content:
 * Then, start building the infrastructure for personal extension. By the end of the day, the project folder will will have:
 
 - [X] A completed `package.json`
-- [ ] A completed `manifest.json`
-- [ ] Script for Google Analytics 
+- [X] A completed `manifest.json`
+- [?] Script for Google Analytics 
 
 **Day 2: Basic UI, Geolocation API, Yelp API**
 * Add main entry point of the extension. 
@@ -75,10 +75,10 @@ There will also be an HTML file to display the content:
 * Research geolocation API and Yelp API.
 
 By the end of the day, the project folder will have:
-- [ ] `popup.html` - main entry point of the app as defined in the manifest file.
-- [ ] `popup.js` - use javascript file by the [the Chromium Authors](http://the-chromium-authors.software.informer.com/)
-- [ ] `webpack.config.js` - webpack bundling file
-- [ ] `package.json` - contains dependencies (i.e. babel-core, react, redux, etc.)
+- [X] `popup.html` - main entry point of the app as defined in the manifest file.
+- [X] `popup.js` - use javascript file by the [the Chromium Authors](http://the-chromium-authors.software.informer.com/)
+- [X] `webpack.config.js` - webpack bundling file
+- [X] `package.json` - contains dependencies (i.e. babel-core, react, redux, etc.)
 
 **Day 3: Redux Cycles - Part 1**
 * Create utils for API calls, action creators, reducers, redux store.
