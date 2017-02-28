@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/liuffy/Open#readme",
   "dependencies": {
+    "ajax-request": "^1.2.1",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
     "babel-preset-es2015": "^6.22.0",
@@ -47,6 +48,8 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "request": "^2.79.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "yelp-api-v3": "^1.5.0",
+    "yelp-fusion-v3": "0.0.8"
   }
 }
