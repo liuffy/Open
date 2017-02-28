@@ -5,17 +5,22 @@ const yelp = require('../../yelp-fusion/fusion/node/node_modules/yelp-fusion');
 const clientId = 'APBMKv2E9sl-ik2-8fTW6Q';
 const clientSecret = 'LWIK70PM6wSSSRhTPpNNsIBOvwViWG3OuHHpEz1gkMLFd6yPHK6ywDO8mEz4DscH';
 
-export const getBusinesses = () => {
+
+
+
+export const getBusinesses = (termInput, locationInput) => {
 const searchRequest = {
-  location: 'san francisco, ca'
+  term: termInput,
+  location: locationInput,
+  limit: '4'
 };
 
 yelp.accessToken(clientId, clientSecret).then(response => {
   const client = yelp.client(response.jsonBody.access_token);
 
   client.search(searchRequest).then(response => {
-    const firstResult = response.jsonBody.businesses[0];
-    const prettyJson = JSON.stringify(firstResult, null, 4);
+    // const firstResult = response.jsonBody.businesses[0];
+    const prettyJson = JSON.stringify(response.jsonBody.businesses, null, 4);
     console.log(prettyJson);
   });
 }).catch(e => {
