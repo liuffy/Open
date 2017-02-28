@@ -1,86 +1,87 @@
 const _defaultError = data => console.log(data);
 const _defaultSuccess = data => console.log(data);
 
+var oauthSignature = require('oauth-signature');  
+var n = require('nonce')();  
+var request = require('request');  
+var qs = require('querystring');  
+var _ = require('lodash');
+
+// Hashing dependencies
+// var OAuth = require('oauth');
+// var sha1 = require('sha1');
+
 // Making a Request
 // Each request must contain the following OAuth protocol parameters:
 
 
-// oauth_consumer_key 			|| 					Your OAuth consumer key (from Manage API Access).
-// oauth_token							|| 					The access token obtained (from Manage API Access).
-// oauth_signature_method		||					hmac-sha1
-// oauth_signature 					||					The generated request signature, signed with the
- // oauth_token_secret 			||					obtained (from Manage API Access).
-// oauth_timestamp	Timestamp for the request in seconds since the Unix epoch.
-// oauth_nonce	A unique string randomly generated per request.
+// oauth_consumer_key       ||          Your OAuth consumer key (from Manage API Access).
+// oauth_token              ||          The access token obtained (from Manage API Access).
+// oauth_signature_method   ||          hmac-sha1
+// oauth_signature          ||          The generated request signature, signed with the
+ // oauth_token_secret      ||          obtained (from Manage API Access).
+// oauth_timestamp  Timestamp for the request in seconds since the Unix epoch.
+// oauth_nonce  A unique string randomly generated per request.
 
-export const getBusinesses = (terms) => {
-var auth = {
-  consumerKey : "kACg96s3LrG0Wwg1qVYhPg",
-  consumerSecret : "8gm1BPlcPTPH2fidqIlZ6N-L1ck",
-  accessToken : "OV0Hnd63Wixx42ciVhw38z5yAHxQC3K",
-  // This example is a proof of concept, for how to use the Yelp v2 API with javascript.
-  // You wouldn't actually want to expose your access token secret like this in a real application.
-  accessTokenSecret : "d17L9cwIO6l0tMJbWmWy3xSO3VM",
-  serviceProvider : {
-      signatureMethod : "HMAC-SHA1"
-  }
-};
 
-var accessor = {
-    consumerSecret : auth.consumerSecret,
-    tokenSecret : auth.accessTokenSecret
-};
+// Consumer Key       kACg96s3LrG0Wwg1qVYhPg
+// Consumer Secret    8gm1BPlcPTPH2fidqIlZ6N-L1ck
+// Token              8t_TVyD5BgheKr4t5p2AYZRYZtthZC2s
+// Token Secret        -d1WLn7cwfEIMmail9H8K6pPemA
 
-// var terms;
-var near = 'San+Francisco';
-  
-var parameters = [];
-          parameters.push(['term', terms]);
-          parameters.push(['location', near]);
-          parameters.push(['callback', 'cb']);
-          parameters.push(['oauth_consumer_key', auth.consumerKey]);
-          parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
-          parameters.push(['oauth_token', auth.accessToken]);
-          parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+export const getBusinesses = (set_parameters, callback) => {
 
-var message = {
-          'action' : 'https://api.yelp.com/v2/search',
-          'method' : 'GET',
-          'parameters' : parameters
-      };
-
-OAuth.setTimestampAndNonce(message);
-OAuth.SignatureMethod.sign(message, accessor);
-
-var parameterMap = OAuth.getParameterMap(message.parameters);
-          
-$.ajax({
-    'url' : message.action,
-    'data' : parameterMap,
-    'dataType' : 'jsonp',
-    'jsonpCallback' : 'cb',
-    'cache': true
-})
-.done(function(data, textStatus, jqXHR) {
-        console.log('success[' + data + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
-    }
-)
-.fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
+  function callback(data) {        
+                console.log('data:', data)
         }
-);
-  
+
+
+  /* The type of request */
+  var httpMethod = 'GET';
+
+  /* The url we are using for the request */
+  var url = 'http://api.yelp.com/v2/search';
+
+  /* We can setup default parameters here */
+  var default_parameters = {
+    location: 'San+Francisco',
+    // sort: '2'
+  };
+
+  /* We set the require parameters here */
+  var required_parameters = {
+    oauth_consumer_key : "kACg96s3LrG0Wwg1qVYhPg",
+    oauth_token : "8t_TVyD5BgheKr4t5p2AYZRYZtthZC2s",
+    oauth_nonce : n(),
+    oauth_timestamp : n().toString().substr(0,10),
+    oauth_signature_method : 'HMAC-SHA1',
+  };
+
+  /* We combine all the parameters in order of importance */ 
+  var parameters = _.assign(default_parameters, set_parameters, required_parameters);
+
+  /* We set our secrets here */
+  var consumerSecret = "8gm1BPlcPTPH2fidqIlZ6N-L1ck";
+  var tokenSecret = "-d1WLn7cwfEIMmail9H8K6pPemA";
+
+  /* Then we call Yelp's Oauth 1.0a server, and it returns a signature */
+  /* Note: This signature is only good for 300 seconds after the oauth_timestamp */
+  var signature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret, tokenSecret, { encodeSignature: false});
+
+  /* We add the signature to the list of paramters */
+  parameters.oauth_signature = signature;
+
+  /* Then we turn the paramters object, to a query string */
+  var paramURL = qs.stringify(parameters);
+
+  /* Add the query string to the url */
+  var apiURL = url+'?'+paramURL;
+
+  /* Then we use request to send make the API Request */
+  request(apiURL, function(error, response, body){
+     if (!error && response.statusCode == 200) {
+    console.log(body) // Show the HTML for the Google homepage. 
   }
+  });
 
-
-// export const getBusinesses = (businessName, error = _defaultError) => 
-// 	$.ajax({
-// 		url: 'https://api.spotify.com/v1/search',
-// 		method: 'GET',
-// 		dataType: 'json',
-// 		data: {
-// 			type: 'name',
-// 			q: 'target'
-// 		},
-// 		error
-// 	});
+};

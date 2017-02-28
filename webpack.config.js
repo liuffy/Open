@@ -7,6 +7,12 @@ module.exports = {
     path: path.join(__dirname,'frontend'),
     filename: "bundle.js"
   },
+   node: {
+      net: 'empty',
+      tls: 'empty',
+      dns: 'empty',
+      fs: "empty"
+    },
   module: {
     loaders: [
       {

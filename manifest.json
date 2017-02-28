@@ -3,25 +3,38 @@
     "version": "0.0.1",
     "manifest_version": 2,
 
+    "content_security_policy": "script-src 'self' https://*/* 'unsafe-inline' 'unsafe-eval'",
+
+     "content_scripts": [{
+     "js": ["jquery.min.js", "oauth.js", "sha1.js"],
+     "matches": ["http://*/*", "https://*/*"]
+   }],
+
 		"icons": { 
 			"48": "icons/icon48.png",
 			// "16": "icons/icon16.png",
 			"128": "icons/icon128.png" 
 		},
 
+
+
 		 "permissions": [
 	    "geolocation",
 	    "activeTab",
 	    "tabs",
 	    "https://ajax.googleapis.com/",
+	    // "https://api.yelp.com/v2/search/*",
+	    "https://api.yelp.com/*",
 			"http://*/*",  
 			"https://*/*"
   ],
 
+
+
     "browser_action": {
 		"default_icon": { 
 			// "16": "icons/icon16.png",
-	    "48": "icons/icon48.png",
+	    // "48": "icons/icon48.png",
 	 		 "128": "icons/icon128.png" 
 	 		},
         "default_title": "Open",
