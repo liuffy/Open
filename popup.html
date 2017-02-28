@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Open</title>
+    <link rel="stylesheet" href="/assets/stylesheets/reset.css">
+    <link rel="stylesheet" href="/assets/stylesheets/reset.css">
+     <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+
+    <!-- stored local copy because of Google Security issue -->
+
+    <script src="jquery.min.js"></script>
+    <script src="devtools.js"></script>
+    <script src="./frontend/bundle.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <p>app not yet loaded</p>
+    </div>
+  </body>
+</html>

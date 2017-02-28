@@ -65,7 +65,7 @@ There will also be an HTML file to display the content:
 * Do some research on purpose and structure of a `manifest.json` file. 
 * Then, start building the infrastructure for personal extension. By the end of the day, the project folder will will have:
 
-- [ ] A completed `package.json`
+- [X] A completed `package.json`
 - [ ] A completed `manifest.json`
 - [ ] Script for Google Analytics 
 
