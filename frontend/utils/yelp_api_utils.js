@@ -3,56 +3,40 @@ const yelp = require('../../yelp-fusion/fusion/node/node_modules/yelp-fusion');
 const clientId = 'APBMKv2E9sl-ik2-8fTW6Q';
 const clientSecret = 'LWIK70PM6wSSSRhTPpNNsIBOvwViWG3OuHHpEz1gkMLFd6yPHK6ywDO8mEz4DscH';
 
-// 
-let searchRequest;
+let searchRequest = {};
 
-function findLocation(){
-  var options = {
-    enableHighAccuracy: true,
-    timeout: 10000
-  };
-  function success(pos) {
-    console.log(pos.coords.latitude)
-    console.log(pos.coords.longitude)
-    searchRequest.latitude = pos.coords.latitude;
-    searchRequest.longitude = pos.coords.longitude;
-  };
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  };
-  navigator.geolocation.getCurrentPosition(success, error, options)
+
+export const getLocalBusinesses = (nameInput) => {
+
+  findLocation()
+    .then(pos => {
+      const { latitude, longitude } = pos.coords;
+      console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
+      searchRequest.latitude = latitude;
+      searchRequest.longitude = longitude;
+      searchRequest.term = nameInput;
+      searchRequest.limit = '2';
+        // Get latitude from findLocation
+        // Get longitude from findlocation
+      let businessIds = [];
+
+      yelp.accessToken(clientId, clientSecret).then(response => {
+        const client = yelp.client(response.jsonBody.access_token);
+
+        client.search(searchRequest).then(response => {
+
+          response.jsonBody.businesses.forEach(function(business){
+            businessIds.push(business.id)
+          })
+          console.log(businessIds);
+        });
+      }).catch(e => {
+        console.log(e);
+      });
+    }).catch(e => {
+      console.log(e);
+    })
 }
-
-// This is the function I'm trying to fix 
-export const getLocalBusinesses = (nameInput) =>{
-
- findLocation()
-
-  searchRequest = {
-    term: nameInput,
-    limit: '2'
-    // Get latitude from findLocation
-    // Get longitude from findlocation
-  };
-
-
-yelp.accessToken(clientId, clientSecret).then(response => {
-    const client = yelp.client(response.jsonBody.access_token);
-
-    client.search(searchRequest).then(response => {
-      // const prettyJson = JSON.stringify(response.jsonBody.businesses, null, 4);
-
-      response.jsonBody.businesses.forEach(function(business){
-        businessIds.push(business.id)
-      })
-      console.log(businessIds);
-    });
-  }).catch(e => {
-    console.log(e);
-  });
-
-}
-
 
 // This works fine
 export const getBusinesses = (nameInput, locationInput) => {
@@ -62,7 +46,7 @@ export const getBusinesses = (nameInput, locationInput) => {
     limit: '3'
   };
 
-  var businessIds = [];
+  const businessIds = [];
 
   yelp.accessToken(clientId, clientSecret).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
@@ -76,23 +60,20 @@ export const getBusinesses = (nameInput, locationInput) => {
   }).catch(e => {
     console.log(e);
   });
-
 }
 
 
-export const getBusinessHours = (iDInput) =>{
+export const getBusinessHours = (id) => {
 
-  var businessHours = {};
+  const businessHours = {};
 
-  yelp.accessToken(clientId, clientSecret).then(response => {
-    const client = yelp.client(response.jsonBody.access_token);
-
-    client.business(iDInput).then(response => {
-      
+  yelp.accessToken(clientId, clientSecret)
+    .then(response => yelp.client(response.jsonBody.access_token))
+    .then(client => client.business(id))
+    .then(response => {
       response.jsonBody.hours[0].open.forEach(function(dayObject){
-          businessHours[dayObject.day] = [dayObject.start, dayObject.end]
+        businessHours[dayObject.day] = [dayObject.start, dayObject.end]
       })
-
       // Let's push all of these into an object? 
       // Hours open
       console.log(businessHours)
@@ -101,17 +82,27 @@ export const getBusinessHours = (iDInput) =>{
       // Phone number
       console.log(response.jsonBody.phone)
       // Boolean open value
-
-      var openOrNot;
-      if (response.jsonBody.hours[0].is_open_now){
-        openOrNot = "open"
-      } else {
-        openOrNot = "closed"
-      }
+      const openOrNot = response.jsonBody.hours[0].is_open_now ? 'open' : 'closed'
       console.log(openOrNot)
-    });
-    
-  }).catch(e => {
-    console.log(e);
+  }).catch(err => {
+    console.warn('[getBusinessHours]', err);
   });
 }
+
+function findLocation(){
+  const options = {enableHighAccuracy:true,maximumAge:Infinity, timeout:20000}
+  return new Promise((resolve, reject) => {
+    return navigator.geolocation.getCurrentPosition(resolve, reject, options)
+  })
+}
+
+function findLocationSuccess(pos) {
+  const { latitude, longitude } = pos
+  console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
+  searchRequest.latitude = latitude;
+  searchRequest.longitude = longitude;
+};
+
+function findLocationError(err) {
+  console.warn('[findLocationError]', err.code, err.message, err);
+};
