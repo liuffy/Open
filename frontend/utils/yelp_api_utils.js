@@ -11,11 +11,12 @@ export const getLocalBusinesses = (nameInput) => {
   findLocation()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
-      console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
+      // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
       searchRequest.latitude = latitude;
       searchRequest.longitude = longitude;
       searchRequest.term = nameInput;
-      searchRequest.limit = '2';
+      searchRequest.limit = '3';
+      // searchRequest.sort_by = "distance"
         // Get latitude from findLocation
         // Get longitude from findlocation
       let businessIds = [];
@@ -26,7 +27,10 @@ export const getLocalBusinesses = (nameInput) => {
         client.search(searchRequest).then(response => {
 
           response.jsonBody.businesses.forEach(function(business){
-            businessIds.push(business.id)
+            // Only grab business IDs of places within 2 miles of user's location
+            if (business.distance < 3218.69){
+              businessIds.push(business.id)
+            }
           })
           console.log(businessIds);
         });
@@ -98,7 +102,7 @@ function findLocation(){
 
 function findLocationSuccess(pos) {
   const { latitude, longitude } = pos
-  console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
+  // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
   searchRequest.latitude = latitude;
   searchRequest.longitude = longitude;
 };
