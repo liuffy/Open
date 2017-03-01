@@ -82,8 +82,8 @@ By the end of the day, the project folder will have:
 
 **Day 3: Redux Cycles - Part 1**
 * Create utils for API calls, action creators, reducers, redux store.
-- [ ] `yelp_api_utils.js` - handle queries for Yelp API
-  - [ ] Test API calls in Dev Tools 
+- [X] `yelp_api_utils.js` - handle queries for Yelp API
+  - [X] Test API calls in Dev Tools 
 - [ ] `yelp_actions.js` - action creators 
 - [ ] `yelp_reducer.js` - process action.data
 - [ ] `root_reducer.js` - gathers child reducers' results into single state object
@@ -92,7 +92,6 @@ By the end of the day, the project folder will have:
 **Day 4-5: Redux Cycles - Part 2**
 * Create components for extension.
 - [ ] `SearchForm`: will be the input form for submitting queries
-- [ ] `SingleResult`: will display the result, based on the user's location (Option 1) as automatically calculated through using the geolocation API.
 - [ ] `ResultList`: will display the results, based on the city inputted by the user (Option2)
   - [ ] `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
 

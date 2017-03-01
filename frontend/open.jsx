@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {getBusinesses, getLocalBusinesses, getBusinessHours} from './utils/yelp_api_utils';
+import {getBusinessesByCity, getLocalBusinesses, getBusinessData} from './utils/yelp_api_utils';
 
 document.addEventListener('DOMContentLoaded', () => {
-	window.getBusinesses = getBusinesses;
+	window.getBusinessesByCity = getBusinessesByCity;
 	window.getLocalBusinesses = getLocalBusinesses;
-	window.getBusinessHours = getBusinessHours;
+	window.getBusinessData = getBusinessData;
   const rootEl = document.getElementById('root');
   ReactDOM.render(<h1>Open is open!</h1>, rootEl);
 });
