@@ -90,7 +90,7 @@ export const getBusinessHours = (id) => {
 }
 
 function findLocation(){
-  const options = {enableHighAccuracy:true,maximumAge:Infinity, timeout:20000}
+  const options = {enableHighAccuracy:false,maximumAge:Infinity, timeout:20000}
   return new Promise((resolve, reject) => {
     return navigator.geolocation.getCurrentPosition(resolve, reject, options)
   })
