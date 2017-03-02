@@ -7,7 +7,7 @@ let searchRequest = {};
 
 
 export const getLocalBusinesses = (nameInput) => {
-
+  console.log('1 is happening')
   findLocation()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
@@ -18,7 +18,6 @@ export const getLocalBusinesses = (nameInput) => {
       searchRequest.limit = '3';
       let businessIds = [];
 
-      
       yelp.accessToken(clientId, clientSecret).then(response => {
         const client = yelp.client(response.jsonBody.access_token);
 
@@ -96,7 +95,7 @@ export const getBusinessData = (dataObject) => {
   //                   distances:{"hot-sauce-and-panko-san-francisco":0.9,"little-skillet-san-francisco-2":0.92, 
   //                   "the-bird-san-francisco-2":0.25}
 
-  
+
   //                 }
  // creates an empty object for each idea within the larger ResultObject
   dataObject.ids.forEach(function(id){
@@ -142,7 +141,6 @@ export const getBusinessData = (dataObject) => {
 
 
 function findLocation(){
-
   const options = {enableHighAccuracy:false,
                    maximumAge:Infinity, 
                    timeout:20000}
