@@ -26,6 +26,7 @@ export const getLocalBusinesses = (nameInput) => {
 
           let businessDistances = {};
           response.jsonBody.businesses.forEach(function(business){
+
     // Only grab business IDs of places within 3 miles of user's location
             if (business.distance < 4828.03){
               businessIds.push(business.id)
@@ -38,8 +39,8 @@ export const getLocalBusinesses = (nameInput) => {
             ids: businessIds,
             distances: businessDistances
           }
-            // return dataObject; // send this to the action creator
-          console.log(dataObject);
+            return dataObject; // send this to the action creator
+          // console.log(dataObject);
         
         });
       }).catch(e => {
@@ -75,46 +76,34 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             ids: businessIds,
             distances: businessDistances
           }
-            // return dataObject; // send this to the action creator
-          console.log(dataObject);
+            return dataObject; // send this to the action creator
+          // console.log(dataObject);
     });
   }).catch(e => {
     console.log(e);
   });
 }
 
-
-
-
-
 // What do we want to output? 
 // A businessObject that contains objects for each of the ids 
-//    Each businessObject has 
-//            * the business' name, 
-//            * distance from input or user's location, 
-//            * hours, 
-//            * address, 
-//            * phone #, 
-//            * whether it's open or not 
-                                // id, businessDistances
+//    Each businessObject has all the info for itself
 let resultObject = {}
 export const getBusinessData = (dataObject) => {
 
-  var dataObject = { ids: ["the-bird-san-francisco-2", 
-                            "hot-sauce-and-panko-san-francisco", 
-                            "little-skillet-san-francisco-2"],
-                    distances:{"hot-sauce-and-panko-san-francisco":0.9,"little-skillet-san-francisco-2":0.92, 
-                    "the-bird-san-francisco-2":0.25}
-                  }
+  // var dataObject = { ids: ["the-bird-san-francisco-2", 
+  //                           "hot-sauce-and-panko-san-francisco", 
+  //                           "little-skillet-san-francisco-2"],
+  //                   distances:{"hot-sauce-and-panko-san-francisco":0.9,"little-skillet-san-francisco-2":0.92, 
+  //                   "the-bird-san-francisco-2":0.25}
+
+  
+  //                 }
  // creates an empty object for each idea within the larger ResultObject
   dataObject.ids.forEach(function(id){
     let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
     resultObject[camelCased] = {}
     // Now let's add info 
     resultObject[camelCased]["distance"] =  dataObject.distances[id]
-
-
-    // API call for each id
 
     let businessHours;
 
@@ -146,11 +135,9 @@ export const getBusinessData = (dataObject) => {
       console.warn('[getBusinessHours]', err);
     });
   })
-        // return resultObject; // send this to the action creator 
- console.log(resultObject)
-        // console.log(resultObject)
+    return resultObject; // send this to the action creator 
+    console.log(resultObject)
 }
-
 
 
 

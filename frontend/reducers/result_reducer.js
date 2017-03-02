@@ -1,10 +1,10 @@
 import {
 	RECEIVE_RESULTS, 
 	RECEIVE_SINGLE_RESULT
-} from '../actions/tracktlist_actions';
+} from '../actions/search_actions';
 
 
-const ResultReducer = (state, action) =>{
+const ResultReducer = (state = {}, action) =>{
 	Object.freeze(state);
 
 	switch(action.type) {

@@ -3,7 +3,7 @@ import ResultReducer from './result_reducer';
 
 
 const RootReducer = combineReducers({
-  result: ResultReducer
+  results: ResultReducer
 });
 
 export default RootReducer;
