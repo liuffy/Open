@@ -11,12 +11,11 @@ export const getLocalBusinesses = (nameInput) => {
   findLocation()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
-      // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
+    // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
       searchRequest.latitude = latitude;
       searchRequest.longitude = longitude;
       searchRequest.term = nameInput;
       searchRequest.limit = '3';
-      // searchRequest.sort_by = "distance"
       let businessIds = [];
 
       
@@ -27,7 +26,7 @@ export const getLocalBusinesses = (nameInput) => {
 
           let businessDistances = {};
           response.jsonBody.businesses.forEach(function(business){
-            // Only grab business IDs of places within 3 miles of user's location
+    // Only grab business IDs of places within 3 miles of user's location
             if (business.distance < 4828.03){
               businessIds.push(business.id)
             // Convert from meters to miles
@@ -35,9 +34,13 @@ export const getLocalBusinesses = (nameInput) => {
             }
           })
 
-          // return businessIds; // send this to the action creator 
-          console.log(businessIds);
-          console.log(businessDistances);
+          var dataObject = {
+            ids: businessIds,
+            distances: businessDistances
+          }
+            // return dataObject; // send this to the action creator
+          console.log(dataObject);
+        
         });
       }).catch(e => {
         console.log(e);
@@ -68,9 +71,12 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
         businessDistances[business.id.toString()] = (Math.round((business.distance * 0.000621371) * 100) / 100)
       })
 
-      // return businessIds; // send these to the actionCreator
-      console.log(businessIds);
-      console.log(businessDistances);
+          var dataObject = {
+            ids: businessIds,
+            distances: businessDistances
+          }
+            // return dataObject; // send this to the action creator
+          console.log(dataObject);
     });
   }).catch(e => {
     console.log(e);
@@ -79,40 +85,75 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
 
 
 
-let businessDataObject = {}
 
-export const getBusinessData = (id, businessDistances) => {
 
-  const businessHours = {};
-  // grabbed this from the previous API calls
-  // businessDistances = {"rustys-southern-san-francisco": 1.01, 
-  //                           "hops-and-hominy-san-francisco": 0.22, 
-  //                           "little-skillet-san-francisco-2": 0.92}
-  yelp.accessToken(clientId, clientSecret)
-    .then(response => yelp.client(response.jsonBody.access_token))
-    .then(client => client.business(id))
-    .then(response => {
-      response.jsonBody.hours[0].open.forEach(function(dayObject){
-        businessHours[dayObject.day] = [dayObject.start, dayObject.end]
-      })
+// What do we want to output? 
+// A businessObject that contains objects for each of the ids 
+//    Each businessObject has 
+//            * the business' name, 
+//            * distance from input or user's location, 
+//            * hours, 
+//            * address, 
+//            * phone #, 
+//            * whether it's open or not 
+                                // id, businessDistances
+let resultObject = {}
+export const getBusinessData = (dataObject) => {
 
-      // Distance from either the user's location or the address/city inputted
-      businessDataObject.distance = businessDistances[id]
-      // business hours
-      businessDataObject.hours = businessHours;
-      // Correctly formatted address
-      businessDataObject.address = response.jsonBody.location.display_address.toString();
-      // Phone #
-      businessDataObject.phone = response.jsonBody.phone;
-      // Openness 
-      businessDataObject.openOrNot = response.jsonBody.hours[0].is_open_now ? 'open' : 'closed'
+  var dataObject = { ids: ["the-bird-san-francisco-2", 
+                            "hot-sauce-and-panko-san-francisco", 
+                            "little-skillet-san-francisco-2"],
+                    distances:{"hot-sauce-and-panko-san-francisco":0.9,"little-skillet-san-francisco-2":0.92, 
+                    "the-bird-san-francisco-2":0.25}
+                  }
+ // creates an empty object for each idea within the larger ResultObject
+  dataObject.ids.forEach(function(id){
+    let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
+    resultObject[camelCased] = {}
+    // Now let's add info 
+ 
 
-      // return businessDataObject; // send this to the action creator 
+    // API call for each id
 
-      console.log(businessDataObject)
-  }).catch(err => {
-    console.warn('[getBusinessHours]', err);
-  });
+    let businessHours;
+
+    yelp.accessToken(clientId, clientSecret)
+      .then(response => yelp.client(response.jsonBody.access_token))
+      .then(client => client.business(id))
+      .then(response => {
+
+// it knows what id is 
+        businessHours = {}
+        // Collect info about business hours
+        response.jsonBody.hours[0].open.forEach(function(dayObject){
+          businessHours[dayObject.day] = [dayObject.start, dayObject.end]
+        // Formatted name of business
+
+
+
+        //  Dashes in object properties will mess everything up, so gotta convert to camelCase
+
+        resultObject[camelCased]["name"]= response.jsonBody.name;
+        // Distance from either the user's location or the address/city inputted
+        resultObject[camelCased]["distance"] = "33",
+        // business hours
+        resultObject[camelCased]["hours"] = businessHours;
+        // Correctly formatted address
+        resultObject[camelCased]["address"]= response.jsonBody.location.display_address.toString();
+        // Phone #
+        resultObject[camelCased]["phone"] = response.jsonBody.phone;
+        // Openness 
+        resultObject[camelCased]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
+        })
+ console.log(resultObject)
+
+
+    }).catch(err => {
+      console.warn('[getBusinessHours]', err);
+    });
+  })
+        // return resultObject; // send this to the action creator 
+        // console.log(resultObject)
 }
 
 

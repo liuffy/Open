@@ -85,15 +85,18 @@ By the end of the day, the project folder will have:
 - [X] `yelp_api_utils.js` - handle queries for Yelp API
   - [X] Test API calls in Dev Tools 
 - [ ] `yelp_actions.js` - action creators 
-- [ ] `yelp_reducer.js` - process action.data
-- [ ] `root_reducer.js` - gathers child reducers' results into single state object
+- [ ] `result_reducer.js` - process action.data
+- [X] `root_reducer.js` - gathers child reducers' results into single state object
+- [ ] `store.js` - holds the whole state tree of the app
 - [ ] `store.js` - holds the whole state tree of the app
 
-**Day 4-5: Redux Cycles - Part 2**
+**Day 4-5: Redux Cycles - Part 2 (Rendering!)**
 * Create components for extension.
+- [ ] `root.jsx` - Figure out routing 
 - [ ] `SearchForm`: will be the input form for submitting queries
-- [ ] `ResultList`: will display the results, based on the city inputted by the user (Option2)
-  - [ ] `ResultList` will contain an unordered list of `ResultIndexItem`s for each of the results if the user wants to check for all of the franchises in a city. 
+- [ ] `ResultList`: (index) will display all results 
+  - [ ] contains an unordered list of `ResultIndexItem`s for each of the results
+- [ ] `ResultShow`: provides additional information about the business (i.e. address/#)
 
 **Day 6: CSS Styling, demo page for chrome extension** 
 
