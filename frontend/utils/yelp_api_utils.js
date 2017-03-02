@@ -111,7 +111,8 @@ export const getBusinessData = (dataObject) => {
     let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
     resultObject[camelCased] = {}
     // Now let's add info 
- 
+    resultObject[camelCased]["distance"] =  dataObject.distances[id]
+
 
     // API call for each id
 
@@ -128,14 +129,8 @@ export const getBusinessData = (dataObject) => {
         response.jsonBody.hours[0].open.forEach(function(dayObject){
           businessHours[dayObject.day] = [dayObject.start, dayObject.end]
         // Formatted name of business
-
-
-
-        //  Dashes in object properties will mess everything up, so gotta convert to camelCase
-
         resultObject[camelCased]["name"]= response.jsonBody.name;
         // Distance from either the user's location or the address/city inputted
-        resultObject[camelCased]["distance"] = "33",
         // business hours
         resultObject[camelCased]["hours"] = businessHours;
         // Correctly formatted address
@@ -145,7 +140,6 @@ export const getBusinessData = (dataObject) => {
         // Openness 
         resultObject[camelCased]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
         })
- console.log(resultObject)
 
 
     }).catch(err => {
@@ -153,6 +147,7 @@ export const getBusinessData = (dataObject) => {
     });
   })
         // return resultObject; // send this to the action creator 
+ console.log(resultObject)
         // console.log(resultObject)
 }
 
