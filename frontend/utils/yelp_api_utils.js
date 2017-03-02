@@ -7,7 +7,7 @@ let searchRequest = {};
 
 
 export const getLocalBusinesses = (nameInput) => {
-  console.log('1 is happening')
+  console.log('We have entered getLocalBusinesses')
   findLocation()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
@@ -17,6 +17,7 @@ export const getLocalBusinesses = (nameInput) => {
       searchRequest.term = nameInput;
       searchRequest.limit = '3';
       let businessIds = [];
+      console.log('We have calculated the users location')
 
       yelp.accessToken(clientId, clientSecret).then(response => {
         const client = yelp.client(response.jsonBody.access_token);
@@ -25,7 +26,7 @@ export const getLocalBusinesses = (nameInput) => {
 
           let businessDistances = {};
           response.jsonBody.businesses.forEach(function(business){
-
+            console.log('We have made a call to the Yelp API the forEach is happening')
     // Only grab business IDs of places within 3 miles of user's location
             if (business.distance < 4828.03){
               businessIds.push(business.id)
@@ -33,13 +34,12 @@ export const getLocalBusinesses = (nameInput) => {
               businessDistances[business.id] = (Math.round((business.distance*0.000621371) * 100) / 100)
             }
           })
-
           var dataObject = {
             ids: businessIds,
             distances: businessDistances
           }
+          console.log(dataObject);
             return dataObject; // send this to the action creator
-          // console.log(dataObject);
         
         });
       }).catch(e => {
@@ -57,16 +57,18 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
     location: locationInput,
     limit: '3'
   };
-
+  console.log('1 is happening!')
   const businessIds = [];
 
   yelp.accessToken(clientId, clientSecret).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
-
     client.search(searchRequest).then(response => {
       let businessDistances = {};
+    console.log('2 is happening!')
+    console.log(response.jsonBody)
 
       response.jsonBody.businesses.forEach(function(business){
+        console.log('3 is happening!!')
         businessIds.push(business.id)
         businessDistances[business.id.toString()] = (Math.round((business.distance * 0.000621371) * 100) / 100)
       })
@@ -75,8 +77,8 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             ids: businessIds,
             distances: businessDistances
           }
+          console.log(dataObject);
             return dataObject; // send this to the action creator
-          // console.log(dataObject);
     });
   }).catch(e => {
     console.log(e);
@@ -97,6 +99,8 @@ export const getBusinessData = (dataObject) => {
 
 
   //                 }
+
+  console.log('4 is happening!!')
  // creates an empty object for each idea within the larger ResultObject
   dataObject.ids.forEach(function(id){
     let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
@@ -144,13 +148,15 @@ function findLocation(){
   const options = {enableHighAccuracy:false,
                    maximumAge:Infinity, 
                    timeout:20000}
-
   return new Promise((resolve, reject) => {
+    console.log ('We are currently finding location.....')
     return navigator.geolocation.getCurrentPosition(resolve, reject, options)
   })
 }
 
 function findLocationSuccess(pos) {
+  console.log ('Successfully found location!')
+
   const { latitude, longitude } = pos
   // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
   searchRequest.latitude = latitude;
