@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router';
-// For a Chrome Extension, you should be using a hash or memory history. 
-// You'll run into problems otherwise.
+
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -19,12 +18,21 @@ class SearchForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let {nameQuery, locationQuery} = this.state; // What we're actually typing into the form
+    let {createLocalResults, createCityResults} = this.props;
+
+    if (document.getElementById('current_location_button').checked){
+        createLocalResults(nameQuery)
+    }else if (locationQuery.length > 0 && nameQuery.length > 0 && document.getElementById('search_city_button').checked){
+       createCityResults(nameQuery, locationQuery)
+    }
+      this.props.router.push(`/results`)
   }
 
 
   render(){
     let {tracktlists} = this.props;
-  	let {title, artists, index_image_url, user_id, playlistUrl} = this.state;
+  	let {nameQuery, locationQuery} = this.state;
 
 
   	return(
@@ -52,6 +60,7 @@ class SearchForm extends React.Component {
         <br />
 
         <input type="radio"
+              id="current_location_button"
                className="currentLocation"
                name='searchOption'
                value="currentLocation"/> Current location <br/>        
@@ -59,12 +68,13 @@ class SearchForm extends React.Component {
             className="reveal-if-active-2">Easy peasy, we'll geolocate you.</p>
          <input 
                type="radio"
+               id="search_city_button"
                className="cityInput"
                name='searchOption'
                value="citySearch"/> Find results near: <br/>
 
          <input 
-          className="standard-input-field reveal-if-active"
+          className="standard-input-field locationQuery reveal-if-active"
           type='text'
           // value={locationQuery}
           placeholder="ex: Webster St, Oakland"

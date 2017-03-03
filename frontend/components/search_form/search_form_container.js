@@ -1,9 +1,7 @@
 import {connect} from 'react-redux';
 import SearchForm from './search_form';
-import {getArtists, 
-				getAlbums, 
-				getTracks, 
-        createTracktlist} from '../../actions/tracktlist_actions';
+import {createLocalResults, 
+        createCityResults} from '../../actions/search_actions';
 
 
 const mapStateToProps = (state) =>({
@@ -11,10 +9,8 @@ const mapStateToProps = (state) =>({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getArtists: artistNames => dispatch(getArtists(artistNames)),
-  getAlbums: artistIds => dispatch(getAlbums(artistIds)),
-  getTracks: albumIds => dispatch(getTracks(albumIds)),
-  createTracktlist: (artistNames, title, imageUrl) => dispatch(createTracktlist(artistNames, title, imageUrl))
+  createLocalResults: nameQuery => dispatch(createLocalResults(nameQuery)),
+  createCityResults: (nameQuery, locationQuery) => dispatch(createCityResults(nameQuery, locationQuery))
 })
 
 
