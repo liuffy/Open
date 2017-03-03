@@ -5,10 +5,18 @@
 
 /*Animations */
 
-.slideIn {
-  animation: slideIn 0.5s ease-in both;
-  -webkit-animation: slideIn 0.5s ease-in both;
-}
+  @keyframes hover {
+  0%, 100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-6px);
+    animation-timing-function: ease-in;
+  }
+} 
+
+
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(-20%); }
 }
@@ -16,16 +24,12 @@
   from { opacity: 0; -webkit-transform: translateY(-20%); }
 }
 
-.slideOut {
-  animation: slideOut 0.5s ease-out both;
-  -webkit-animation: slideOut 0.5s ease-out both;
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
-@keyframes slideOut {
-  to { opacity: 0; transform: translateY(50%); }
-}
-@-webkit-keyframes slideOut {
-  to { opacity: 0; -webkit-transform: translateY(50%); }
-}
+
 
 /* Tada ~*/
 
@@ -40,6 +44,23 @@ textarea:focus, input:focus{
 .search-instructions{
 	text-align:center;
 	font-size:18px;
+	cursor:default;
+	 -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.open-fade{
+	text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
+			margin-left:5px;
+	    -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 3s; /* Firefox < 16 */
+        -ms-animation: fadein 3s; /* Internet Explorer */
+         -o-animation: fadein 3s; /* Opera < 12.1 */
+  animation: fadein 3s;
 }
 
 .search-button{
@@ -78,13 +99,11 @@ textarea:focus, input:focus{
 }
 
 
-/*Styling input elements */
-input[type="radio"]:checked{
-	background-image: url('../images/checked_off-radio.png');
-}
 
+/*Styling input elements */
 
 .search-form input[type="text"]{
+	border: 2px solid #d623fe;
 	font-size:16px;
 	font-weight:600;
 	letter-spacing:1px;

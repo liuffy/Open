@@ -47,7 +47,7 @@ class SearchForm extends React.Component {
           placeholder="ex: Burma Superstar"
           onChange={this.update('nameQuery')} />
 
-        <p className="search-instructions">is <span className="pacifico">open</span> </p>
+        <p className="search-instructions">is <span className="pacifico open-fade">open</span> </p>
   
         <br />
 
@@ -56,7 +56,7 @@ class SearchForm extends React.Component {
                name='searchOption'
                value="currentLocation"/> Current location <br/>        
           <p
-            className="reveal-if-active-2">Easy peasy.</p>
+            className="reveal-if-active-2">Easy peasy, we'll geolocate you.</p>
          <input 
                type="radio"
                className="cityInput"
