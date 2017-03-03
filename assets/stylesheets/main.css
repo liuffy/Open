@@ -3,6 +3,9 @@
 	font-size:14px;
 }
 
+body{
+	background: #ebeaed;
+}
 /*Animations */
 
   @keyframes hover {
