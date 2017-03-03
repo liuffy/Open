@@ -1,3 +1,4 @@
+
 const yelp = require('../../yelp-fusion/fusion/node/node_modules/yelp-fusion');
 
 const clientId = 'APBMKv2E9sl-ik2-8fTW6Q';
@@ -52,23 +53,22 @@ export const getLocalBusinesses = (nameInput) => {
 
 // This works fine
 export const getBusinessesByCity = (nameInput, locationInput) => {
+  console.log('We have entered the getBusinessesByCity function!')
   searchRequest = {
     term: nameInput,
     location: locationInput,
     limit: '3'
   };
-  console.log('1 is happening!')
   const businessIds = [];
 
   yelp.accessToken(clientId, clientSecret).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
     client.search(searchRequest).then(response => {
       let businessDistances = {};
-    console.log('2 is happening!')
-    console.log(response.jsonBody)
+    console.log('Yelp API call happening!')
 
       response.jsonBody.businesses.forEach(function(business){
-        console.log('3 is happening!!')
+        console.log('We are building dataObject now!')
         businessIds.push(business.id)
         businessDistances[business.id.toString()] = (Math.round((business.distance * 0.000621371) * 100) / 100)
       })
@@ -77,8 +77,8 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             ids: businessIds,
             distances: businessDistances
           }
-          console.log(dataObject);
-            return dataObject; // send this to the action creator
+          console.log('dataObject:',dataObject);
+          return dataObject; // send this to the action creator
     });
   }).catch(e => {
     console.log(e);
@@ -100,7 +100,7 @@ export const getBusinessData = (dataObject) => {
 
   //                 }
 
-  console.log('4 is happening!!')
+  console.log('WOW!! We are starting to make the resultObject!!')
  // creates an empty object for each idea within the larger ResultObject
   dataObject.ids.forEach(function(id){
     let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
@@ -138,8 +138,8 @@ export const getBusinessData = (dataObject) => {
       console.warn('[getBusinessHours]', err);
     });
   })
+    console.log('resultobject:',resultObject)
     return resultObject; // send this to the action creator 
-    console.log(resultObject)
 }
 
 

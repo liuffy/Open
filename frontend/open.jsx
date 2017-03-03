@@ -4,13 +4,13 @@ import configureStore from './store/store';
 import Root from './components/root';
 import {createLocalResults, createCityResults} from './actions/search_actions';
 
-// import {getBusinessesByCity, getLocalBusinesses, getBusinessData} from './utils/yelp_api_utils';
+import {getBusinessesByCity, getLocalBusinesses, getBusinessData} from './utils/yelp_api_utils';
 
 document.addEventListener('DOMContentLoaded', () => {
 	// window.getBusinessesByCity = getBusinessesByCity;
 	// window.getLocalBusinesses = getLocalBusinesses;
-	// window.getBusinessData = getBusinessData;
-	// store.dispatch(action()) to see if it works;
+	window.getBusinessData = getBusinessData;
+	// store.dispatch(action()) to see if action creators work;
 	let store = configureStore();
 	window.store = store;
 	window.createLocalResults = createLocalResults;
