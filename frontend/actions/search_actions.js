@@ -40,9 +40,8 @@ export function createCityResults(nameQuery, locationQuery){
 				// full information about the businesses 
 				return YelpAPIUtil.getBusinessData(dataObject)
 				.then(resultObject => { 
-					console.log(resultObject)
-					// dispatch(receiveResults(resultObject));
-					// return resultObject;
+					dispatch(receiveResults(resultObject));
+					return resultObject;
 				})
 		})
 	}

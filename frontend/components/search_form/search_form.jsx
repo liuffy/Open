@@ -1,12 +1,14 @@
 import React from 'react';
+import {Link, withRouter} from 'react-router';
 // For a Chrome Extension, you should be using a hash or memory history. 
 // You'll run into problems otherwise.
 
-class searchForm extends React.Component {
+class SearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+       nameQuery: "",
+       locationQuery: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -26,35 +28,55 @@ class searchForm extends React.Component {
 
 
   	return(
-      <div>
+
           
 
-      <div
-      className="tracktlist-form cf">
+      <div>
 
         <form
+          className = "search-form"
           onSubmit = {this.handleSubmit}>
         <br />
 
+        <p className="search-instructions">I want to know if </p>
 
-      
-        <label><h3
-          className="create">Paste image URL for the mix's cover art (PNG, JPG, etc.)</h3>
-        <input 
-          className="standard-input-field2"
+       <input 
+          className="standard-input-field main-search"
           type='text'
-          value={index_image_url}
-          placeholder="ex: pretty_picture.png"
-          onChange={this.update('index_image_url')} />
-        </label>
+          // value={nameQuery}
+          placeholder="ex: Burma Superstar"
+          onChange={this.update('nameQuery')} />
+
+        <p className="search-instructions">is <span className="pacifico">open</span> </p>
+  
         <br />
 
+        <input type="radio"
+               className="currentLocation"
+               name='searchOption'
+               value="currentLocation"/> Current location <br/>        
+          <p
+            className="reveal-if-active-2">Easy peasy.</p>
+         <input 
+               type="radio"
+               className="cityInput"
+               name='searchOption'
+               value="citySearch"/> Find results near: <br/>
+
+         <input 
+          className="standard-input-field reveal-if-active"
+          type='text'
+          // value={locationQuery}
+          placeholder="ex: Webster St, Oakland"
+          onChange={this.update('locationQuery')} />
+
+
         <button
-        className="create-button">check</button>
+        className="search-button">check</button>
              
         </form>
       </div>
-      </div>
+
     )
   }
 
