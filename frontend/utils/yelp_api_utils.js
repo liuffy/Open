@@ -8,6 +8,10 @@ let searchRequest = {};
 
 
 export const getLocalBusinesses = (nameInput) => {
+
+  // Instead of returning a value, I need to return a promise.
+
+  // So, I simply wrap the function in a promise, resolving the value (dataObject)!
     return new Promise((resolve, reject) => {
 
   console.log('We have entered getLocalBusinesses')
@@ -41,13 +45,12 @@ export const getLocalBusinesses = (nameInput) => {
             ids: businessIds,
             distances: businessDistances
           }
-          resolve(dataObject); // send this to the action creator
+          resolve(dataObject); // send this to the .then by resolving it 
     });
   }).catch(e => {
     console.log(e);
-    reject(e)
+    reject(e) // reject the error
   });
-
 
   });
   })

@@ -84,13 +84,12 @@ By the end of the day, the project folder will have:
 * Create utils for API calls, action creators, reducers, redux store.
 - [X] `yelp_api_utils.js` - handle queries for Yelp API
   - [X] Test API calls in Dev Tools 
-- [ ] `yelp_actions.js` - action creators 
-- [ ] `result_reducer.js` - process action.data
+- [X] `yelp_actions.js` - action creators 
+- [X] `result_reducer.js` - process action.data
 - [X] `root_reducer.js` - gathers child reducers' results into single state object
-- [ ] `store.js` - holds the whole state tree of the app
-- [ ] `store.js` - holds the whole state tree of the app
+- [X] `store.js` - holds the whole state tree of the app
 
-**Day 4-5: Redux Cycles - Part 2 (Rendering!)**
+**Day 4: Redux Cycles - Part 2 (Rendering!)**
 * Create components for extension.
 - [ ] `root.jsx` - Figure out routing 
 - [ ] `SearchForm`: will be the input form for submitting queries
