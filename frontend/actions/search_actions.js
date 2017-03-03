@@ -13,12 +13,12 @@ export function createLocalResults(nameQuery){
 		dispatch(requestResults());
 
 		// Perform the actual API call that grabs IDs and distances of the results
-		 return (YelpAPIUtil.getLocalBusinesses(nameQuery))
+		 return YelpAPIUtil.getLocalBusinesses(nameQuery)
 		 .then(dataObject => {
 
 				// Another call, using the ID data from the previous call to grab 
 				// full information about the businesses 
-				return (YelpAPIUtil.businessDataObject(dataObject))
+				return YelpAPIUtil.getBusinessData(dataObject)
 				.then(resultObject => { 
 					dispatch(receiveResults(resultObject));return resultObject;
 				})
@@ -33,13 +33,16 @@ export function createCityResults(nameQuery, locationQuery){
 		dispatch(requestResults());
 
 		// Perform the actual API call that grabs IDs and distances of the results
-		return (YelpAPIUtil.getBusinessesByCity(nameQuery, locationQuery))
+		return YelpAPIUtil.getBusinessesByCity(nameQuery, locationQuery)
 		.then(dataObject => {
 
 				// Another call, using the ID data from the previous call to grab 
 				// full information about the businesses 
-				return (YelpAPIUtil.businessDataObject(dataObject))
-				.then(resultObject => { dispatch(receiveResults(resultObject));return resultObject;
+				return YelpAPIUtil.getBusinessData(dataObject)
+				.then(resultObject => { 
+					console.log(resultObject)
+					// dispatch(receiveResults(resultObject));
+					// return resultObject;
 				})
 		})
 	}
