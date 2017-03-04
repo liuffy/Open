@@ -3,12 +3,12 @@ import {Link} from 'react-router';
 import {withRouter} from 'react-router';
 
 const ResultIndexItem = ({individualResult}) =>{
-
+	// console.log(JSON.stringify(individualResult)) // No missing data whatsoever
 	let openClass;
-	if (individualResult.open_now === "open"){
-		openClass = "pacifico-small-open";
-	} else {
+	if (individualResult.openOrNot === "Closed"){
 		openClass = "pacifico-small-closed";
+	} else {
+		openClass = "pacifico-small-open";
 	}
 
 	console.log('individualResult:',individualResult)
@@ -17,11 +17,11 @@ const ResultIndexItem = ({individualResult}) =>{
 
 				<div className="left-side">
 					<span className="name-label">{individualResult.name}</span><br/>
-					<span className="miles-label">{individualResult.distance} miles</span><br/>
+					<p className="miles-label">{individualResult.distance} miles</p><br/> 
 				</div>
 
 					<div className="right-side">
-					<span className= {openClass}>{individualResult.open_now}</span>
+					<span className= {openClass}>{individualResult.openOrNot}</span> 
 				</div>
 
 			</div>

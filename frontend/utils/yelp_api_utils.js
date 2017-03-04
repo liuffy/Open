@@ -33,7 +33,6 @@ export const getLocalBusinesses = (nameInput) => {
 
           let businessDistances = {};
           let businessNames = {};
-          let businessOpens = {};
           let businessPhones = {};
 
           response.jsonBody.businesses.forEach(function(business){
@@ -43,7 +42,6 @@ export const getLocalBusinesses = (nameInput) => {
               businessIds.push(business.id)
             // Convert from meters to miles
               businessNames[business.id] = business.name;
-              businessOpens[business.id] = business.is_closed ? 'Closed ' : 'Open';
               businessPhones[business.id] = business.phone;
               businessDistances[business.id] = (Math.round((business.distance * 0.000621371) * 100) / 100)
             }
@@ -52,7 +50,6 @@ export const getLocalBusinesses = (nameInput) => {
                 ids: businessIds,
                 distances: businessDistances,
                 names: businessNames,
-                opens: businessOpens,
                 phones: businessPhones
               }
           resolve(dataObject); // send this to the .then by resolving it 
@@ -76,20 +73,26 @@ export const getBusinessesByCity = (nameInput, locationInput) =>{
     location: locationInput,
     limit: '3'
   };
-  const businessIds = [];
    yelp.accessToken(clientId, clientSecret).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
     client.search(searchRequest).then(response => {
+      let businessIds = [];
       let businessDistances = {};
+      let businessNames = {};
+      let businessPhones = {};
 
       response.jsonBody.businesses.forEach(function(business){
         businessIds.push(business.id)
+        businessNames[business.id] = business.name;
+        businessPhones[business.id] = business.phone;
         businessDistances[business.id.toString()] = (Math.round((business.distance * 0.000621371) * 100) / 100)
       })
 
           var dataObject = {
-            ids: businessIds,
-            distances: businessDistances
+          ids: businessIds,
+          distances: businessDistances,
+          names: businessNames,
+          phones: businessPhones
           }
           resolve(dataObject); // send this to the action creator
     });
@@ -103,59 +106,54 @@ export const getBusinessesByCity = (nameInput, locationInput) =>{
   
 }
 
-  
-
-
 // What do we want to output? 
 // A businessObject that contains objects for each of the ids 
 //    Each businessObject has all the info for itself
-let resultObject = {}
 export const getBusinessData = (dataObject) => {
 
   return new Promise ((resolve, reject) => {
     // creates an empty object for each idea within the larger ResultObject
+    const resultObject = {}
 
       dataObject.ids.forEach(function(id){
-      let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
-      resultObject[camelCased] = {}
-      // Now let's add info 
-      resultObject[camelCased]["phone"] =  dataObject.phones[id]
-      resultObject[camelCased]["open_now"] =  dataObject.opens[id]
-      resultObject[camelCased]["distance"] =  dataObject.distances[id]
-      resultObject[camelCased]["name"] =  dataObject.names[id]
+      // Convert dashed IDs to camelCase
+        let camelCasedName = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
+        resultObject[camelCasedName] = {}
 
-      let businessHours;
+        // Inject info from the previous call
+        resultObject[camelCasedName]["phone"] =  dataObject.phones[id] 
+        resultObject[camelCasedName]["distance"] =  dataObject.distances[id]
+        resultObject[camelCasedName]["name"] =  dataObject.names[id]
 
-      yelp.accessToken(clientId, clientSecret)
-        .then(response => yelp.client(response.jsonBody.access_token))
-        .then(client => client.business(id))
-        .then(response => {
+        let businessHours;
 
-  // it knows what id is 
-          businessHours = {}
-          // Collect info about business hours
-          response.jsonBody.hours[0].open.forEach(function(dayObject){
-            businessHours[dayObject.day] = [dayObject.start, dayObject.end]
-          // Formatted name of business
-          // resultObject[camelCased]["name"]= response.jsonBody.name;
-          // Distance from either the user's location or the address/city inputted
-          // business hours
-          resultObject[camelCased]["hours"] = businessHours;
+        yelp.accessToken(clientId, clientSecret)
+          .then(response => yelp.client(response.jsonBody.access_token))
+          .then(client => client.business(id))
+          .then(response => {
           // Correctly formatted address
-          resultObject[camelCased]["address"]= response.jsonBody.location.display_address.toString();
-          // Phone #
-          // resultObject[camelCased]["phone"] = response.jsonBody.phone;
+           resultObject[camelCasedName]["address"] = response.jsonBody.location.display_address.toString();         
           // Openness 
-          // resultObject[camelCased]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
-          })
 
+          console.log('hey now', resultObject[camelCasedName]["address"])
+            resultObject[camelCasedName]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
+
+            businessHours = {}
+            // Collect info about business hours
+            response.jsonBody.hours[0].open.forEach(function(dayObject){
+              businessHours[weekify(dayObject)] = `${dayObject.start} - ${dayObject.end}`
+              resultObject[camelCasedName]["hours"] = businessHours;
+          })
 
       }).catch(err => {
         reject(err)
       })
 
     })
-      console.log('resultobject:',resultObject)
+      var clonedResult= (cloneObject(resultObject));
+      console.log('resultobject:',resultObject) // Shows all data! 
+      console.log('clonedObject:', clonedResult) // Missing data! (address, openOrNot, and hours)
+      console.log('stringified:',JSON.stringify(resultObject)) // Missing data (address, openOrNot, and hours)
       resolve(resultObject); // send this to the action creator 
 
   });
@@ -175,7 +173,7 @@ function findLocation(){
 function findLocationSuccess(pos) {
   console.log ('Successfully found location!')
 
-  const { latitude, longitude } = pos
+  const { latitude, longitude } = pos;
   // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude)
   searchRequest.latitude = latitude;
   searchRequest.longitude = longitude;
@@ -184,3 +182,36 @@ function findLocationSuccess(pos) {
 function findLocationError(err) {
   console.warn('[findLocationError]', err.code, err.message, err);
 };
+
+function weekify(dayObject){
+
+  if (dayObject.day === 0){
+    return "Mon"
+  } else if (dayObject.day === 1){
+    return "Tues"
+  } else if (dayObject.day === 2){
+    return "Wed"
+  } else if (dayObject.day === 3){
+    return "Thurs"
+  } else if (dayObject.day === 4){
+    return "Fri"
+  } else if (dayObject.day === 5){
+    return "Sat"
+  } else if (dayObject.day === 6){
+    return "Sunday"
+  }
+}
+
+
+function cloneObject(obj) {
+    if (obj === null || typeof obj !== 'object') {
+        return obj;
+    }
+ 
+    var temp = obj.constructor(); // give temp the original obj's constructor
+    for (var key in obj) {
+        temp[key] = cloneObject(obj[key]);
+    }
+ 
+    return temp;
+}
