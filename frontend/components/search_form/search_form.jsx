@@ -23,10 +23,11 @@ class SearchForm extends React.Component {
 
     if (document.getElementById('current_location_button').checked){
         createLocalResults(nameQuery)
+        this.props.router.push(`/results`)
     }else if (locationQuery.length > 0 && nameQuery.length > 0 && document.getElementById('search_city_button').checked){
        createCityResults(nameQuery, locationQuery)
-    }
       this.props.router.push(`/results`)
+    }
   }
 
 
@@ -34,10 +35,7 @@ class SearchForm extends React.Component {
     let {tracktlists} = this.props;
   	let {nameQuery, locationQuery} = this.state;
 
-
   	return(
-
-          
 
       <div>
 
@@ -52,7 +50,7 @@ class SearchForm extends React.Component {
           className="standard-input-field main-search"
           type='text'
           // value={nameQuery}
-          placeholder="ex: Burma Superstar"
+          placeholder="ex: Burma Superstar, tacos, CVS"
           onChange={this.update('nameQuery')} />
 
         <p className="search-instructions">is <span className="pacifico open-fade">open</span> </p>

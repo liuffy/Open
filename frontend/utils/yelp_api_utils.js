@@ -32,19 +32,29 @@ export const getLocalBusinesses = (nameInput) => {
         client.search(searchRequest).then(response => {
 
           let businessDistances = {};
+          let businessNames = {};
+          let businessOpens = {};
+          let businessPhones = {};
+
           response.jsonBody.businesses.forEach(function(business){
             console.log('We have made a call to the Yelp API the forEach is happening')
     // Only grab business IDs of places within 3 miles of user's location
-            if (business.distance < 4828.03){
+            if (business.distance < 3218.69){
               businessIds.push(business.id)
             // Convert from meters to miles
-              businessDistances[business.id] = (Math.round((business.distance*0.000621371) * 100) / 100)
+              businessNames[business.id] = business.name;
+              businessOpens[business.id] = business.is_closed ? 'Closed ' : 'Open';
+              businessPhones[business.id] = business.phone;
+              businessDistances[business.id] = (Math.round((business.distance * 0.000621371) * 100) / 100)
             }
           })
                var dataObject = {
-            ids: businessIds,
-            distances: businessDistances
-          }
+                ids: businessIds,
+                distances: businessDistances,
+                names: businessNames,
+                opens: businessOpens,
+                phones: businessPhones
+              }
           resolve(dataObject); // send this to the .then by resolving it 
     });
   }).catch(e => {
@@ -109,7 +119,10 @@ export const getBusinessData = (dataObject) => {
       let camelCased = id.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase(); });
       resultObject[camelCased] = {}
       // Now let's add info 
+      resultObject[camelCased]["phone"] =  dataObject.phones[id]
+      resultObject[camelCased]["open_now"] =  dataObject.opens[id]
       resultObject[camelCased]["distance"] =  dataObject.distances[id]
+      resultObject[camelCased]["name"] =  dataObject.names[id]
 
       let businessHours;
 
@@ -124,16 +137,16 @@ export const getBusinessData = (dataObject) => {
           response.jsonBody.hours[0].open.forEach(function(dayObject){
             businessHours[dayObject.day] = [dayObject.start, dayObject.end]
           // Formatted name of business
-          resultObject[camelCased]["name"]= response.jsonBody.name;
+          // resultObject[camelCased]["name"]= response.jsonBody.name;
           // Distance from either the user's location or the address/city inputted
           // business hours
           resultObject[camelCased]["hours"] = businessHours;
           // Correctly formatted address
           resultObject[camelCased]["address"]= response.jsonBody.location.display_address.toString();
           // Phone #
-          resultObject[camelCased]["phone"] = response.jsonBody.phone;
+          // resultObject[camelCased]["phone"] = response.jsonBody.phone;
           // Openness 
-          resultObject[camelCased]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
+          // resultObject[camelCased]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
           })
 
 

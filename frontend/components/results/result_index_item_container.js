@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import TracktlistIndexItem from './result_index_item';
+import ResultIndexItem from './result_index_item';
 
 
 const mapStateToProps = (state, ownProps) => ({

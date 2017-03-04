@@ -5,7 +5,7 @@
 
 body{
 	background: #ebeaed;
-  width:310px;
+  width:400px;
   height:290px;
 }
 /*Animations */
@@ -38,23 +38,24 @@ body{
 
 
 .spinner{
-  width:310px;
+  width:400px;
   height:290px;
-    top: 0;
+  top: 0;
   left: 0;
   right: 0;
   background-size: cover;
   background-position: center;
   bottom:0;
-  background: linear-gradient(217deg, #f8e1fe, #eaffef, #f7fccb);
-  background-size: 300% 300%;
-   -webkit-animation: GradientAnimation 2s ease infinite;
-  -moz-animation: GradientAnimation 2s ease infinite;
-  animation: GradientAnimation 2s ease infinite;
+  background: white;
+  /*background: linear-gradient(217deg, #e994fc, #eaffef, #f7fccb);*/
+/*  background-size: 400% 400%;
+   -webkit-animation: GradientAnimation 6s ease infinite;
+  -moz-animation: GradientAnimation 6s ease infinite;
+  animation: GradientAnimation 6s ease infinite;*/
 }
 
   
-    @-webkit-keyframes GradientAnimation {
+  @-webkit-keyframes GradientAnimation {
     0%{background-position:0% 50%}
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
@@ -72,11 +73,24 @@ body{
 
 .loader-logo {
   position:relative;
-  top:30%;
-  left:30%;
-  height: 110px;
+  top:25%;
+  left:35%;
+  height: 120px;
   width:auto;
-  animation: hover 1s infinite;
+  animation: hover 2s infinite;
+}
+
+.loader-text{
+  position:absolute;
+  display:block;
+  font-size:26px;
+  font-weight:600;
+  font-family: 'Pacifico', cursive;
+  color: #d623fe;
+  text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
+  top:65%;
+  left:35%;
+  animation: fadeIn 2s infinite;
 }
 
 
@@ -143,7 +157,7 @@ textarea:focus, input:focus{
 
 .result-index, .search-form{
 	padding:15px 30px 25px 30px;
-	width:250px;
+	width:350px;
 }
 
 
@@ -231,6 +245,20 @@ textarea:focus, input:focus{
 	color: #ce25fc;
 }
 
+.pacifico-small-open{
+  font-family: 'Pacifico', cursive;
+  font-size:20px;
+  text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
+  color: #ce25fc;
+}
+
+.pacifico-small-closed{
+  font-family: 'Pacifico', cursive;
+  font-size:20px;
+  text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
+  color: #5636af;
+}
+
 .results-label{
     font-family: 'Pacifico', cursive;
     font-size:27px;
@@ -239,3 +267,61 @@ textarea:focus, input:focus{
 }
 
 
+.index-item{
+  border:1px solid rgb(172, 175, 175);
+  margin: 15px 0px;
+  background:rgba(255,255,255, 0.7);
+  box-shadow:
+  rgba(172, 175, 175, 0.5) 1px 1px,
+  rgba(172, 175, 175, 0.4) 2px 2px,
+  rgba(172, 175, 175, 0.3) 3px 3px,
+  rgba(172, 175, 175, 0.2) 4px 4px;
+  padding:10px 15px;
+  border-radius:5px;
+  transition: all 0.15s ease 0s;
+}
+
+.index-item:hover{
+  background:white;
+  cursor:pointer;
+  box-shadow:
+  rgba(172, 175, 175, 0.2) 1px 1px,
+  rgba(172, 175, 175, 0.1) 2px 2px,
+  rgba(172, 175, 175, 0.00) 3px 3px,
+  rgba(172, 175, 175, 0.00) 4px 4px;
+}
+
+.loaded-results{
+  height:200px;
+  /*overflow-y: hidden;*/
+  /*overflow-y:scroll;*/
+}
+
+.left-side{
+  word-wrap: break-word;
+  display:inline-block;
+  float:left;
+  width:240px;
+  /*border:1px solid black;*/
+}
+
+.left-side span{
+  font-size:16px;
+}
+
+.right-side{
+  display:inline-block;
+  float:right;
+  text-align:right;
+  width:60px;
+  margin-bottom:5px;
+}
+
+.name-label{
+  line-height:80%;
+  font-weight:600;
+  margin-bottom:5px;
+}
+.miles-label{
+  font-size:12px !important;
+  color: #797a7a;}
