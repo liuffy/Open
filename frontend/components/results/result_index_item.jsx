@@ -4,6 +4,7 @@ import {withRouter} from 'react-router';
 
 const ResultIndexItem = ({individualResult}) =>{
 	console.log('Stringified individual result', JSON.stringify(individualResult)) // Missing data issue
+	console.log('individualResult:',individualResult) // Data complete if not stringified
 	let openClass;
 	if (individualResult.openOrNot === "Closed"){
 		openClass = "pacifico-small-closed";
@@ -11,7 +12,6 @@ const ResultIndexItem = ({individualResult}) =>{
 		openClass = "pacifico-small-open";
 	}
 
-	console.log('individualResult:',individualResult)
 		return(
 			<div className="index-item group">
 
