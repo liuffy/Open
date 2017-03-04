@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {withRouter} from 'react-router';
 
 const ResultIndexItem = ({individualResult}) =>{
-	// console.log(JSON.stringify(individualResult)) // No missing data whatsoever
+	console.log('Stringified individual result', JSON.stringify(individualResult)) // Missing data issue
 	let openClass;
 	if (individualResult.openOrNot === "Closed"){
 		openClass = "pacifico-small-closed";
