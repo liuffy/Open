@@ -28,8 +28,9 @@ handleClick(e) {
 		return(
 			<div className="index-item group">
 
+					<Link to={`/${individualResult.camelCased}`}>
+					<span className="name-label">{individualResult.name}<br/>
 				<div className="left-side">
-					<Link to={`/${individualResult.camelCased}`}><span className="name-label">{individualResult.name}</span></Link><br/>
 					<p className="miles-label">{individualResult.distance} miles</p><br/> 
 				</div>
 
@@ -37,7 +38,7 @@ handleClick(e) {
 					<span className= {openClass}>{individualResult.openOrNot}</span> 
 				</div>
 
-
+				</span></Link>
 			</div>
 		)
 	}

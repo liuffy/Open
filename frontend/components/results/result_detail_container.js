@@ -4,6 +4,7 @@ import { selectResult } from '../../reducers/selectors';
 
 const mapStateToProps = (state, { params }) => {
 	const businessName = params.businessName;
+	console.log(params)
 	const individualBusiness = selectResult(state, businessName);
 	console.log(individualBusiness)
 
