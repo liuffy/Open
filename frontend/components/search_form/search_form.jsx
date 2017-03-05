@@ -17,6 +17,7 @@ class SearchForm extends React.Component {
   }
 
   handleSubmit(e) {
+    let struggleText = "";
     e.preventDefault();
     let {nameQuery, locationQuery} = this.state; // What we're actually typing into the form
     let {createLocalResults, createCityResults} = this.props;
@@ -27,6 +28,8 @@ class SearchForm extends React.Component {
     }else if (locationQuery.length > 0 && nameQuery.length > 0 && document.getElementById('search_city_button').checked){
        createCityResults(nameQuery, locationQuery)
       this.props.router.push(`/results`)
+    } else {
+      struggleText = "One or more fields missing :-("
     }
   }
 
@@ -63,7 +66,7 @@ class SearchForm extends React.Component {
                name='searchOption'
                value="currentLocation"/> Current location <br/>        
           <p
-            className="reveal-if-active-2">Easy peasy, we'll geolocate you.</p>
+            className="reveal-if-active-2">Easy peasy, we'll geolocate you</p>
          <input 
                type="radio"
                id="search_city_button"
@@ -77,7 +80,6 @@ class SearchForm extends React.Component {
           // value={locationQuery}
           placeholder="ex: Webster St, Oakland"
           onChange={this.update('locationQuery')} />
-
 
         <button
         className="search-button">check</button>

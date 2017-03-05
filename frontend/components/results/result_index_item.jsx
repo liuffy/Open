@@ -2,21 +2,34 @@ import React from 'react';
 import {Link} from 'react-router';
 import {withRouter} from 'react-router';
 
-const ResultIndexItem = ({individualResult}) =>{
-	console.log('Stringified individual result', JSON.stringify(individualResult)) // Missing data issue
-	console.log('individualResult:',individualResult) // Data complete if not stringified
-	let openClass;
-	if (individualResult.openOrNot === "Closed"){
+
+class ResultIndexItem extends React.Component{
+ constructor(props){
+  super(props);
+}
+
+handleClick(e) {
+  e.preventDefault();
+	let {individualResult} = this.props;
+	 this.props.router.push(`/${individualResult.camelCased}`)
+}
+
+  render(){
+		let {individualResult} = this.props;
+
+		let openClass;
+		if (individualResult.openOrNot === "Closed"){
 		openClass = "pacifico-small-closed";
-	} else {
+		} else {
 		openClass = "pacifico-small-open";
-	}
+		}
+
 
 		return(
 			<div className="index-item group">
 
 				<div className="left-side">
-					<span className="name-label">{individualResult.name}</span><br/>
+					<Link to={`/${individualResult.camelCased}`}><span className="name-label">{individualResult.name}</span></Link><br/>
 					<p className="miles-label">{individualResult.distance} miles</p><br/> 
 				</div>
 
@@ -24,9 +37,10 @@ const ResultIndexItem = ({individualResult}) =>{
 					<span className= {openClass}>{individualResult.openOrNot}</span> 
 				</div>
 
+
 			</div>
 		)
-		
+	}
 }
 
 

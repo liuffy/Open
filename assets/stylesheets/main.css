@@ -38,6 +38,13 @@ body{
    }
 }
 
+@keyframes slideLeftIn {
+  from { opacity: 0; transform: translateX(-50%); }
+}
+@-webkit-keyframes slideLeftIn {
+  from { opacity: 0; -webkit-transform: translateX(-50%); }
+}
+
 
 .spinner{
   width:400px;
@@ -45,10 +52,12 @@ body{
   top: 0;
   left: 0;
   right: 0;
+  bottom:0;
   background-size: cover;
   background-position: center;
-  bottom:0;
   background: white;
+ animation-name: slideLeftIn;
+  animation-duration: 0.5s;
   /*background: linear-gradient(217deg, #e994fc, #eaffef, #f7fccb);*/
 /*  background-size: 400% 400%;
    -webkit-animation: GradientAnimation 6s ease infinite;
@@ -145,6 +154,12 @@ textarea:focus, input:focus{
 	transition: all 0.15s ease 0s;
 }
 
+.new-search{
+  width:90px;
+  float:right;
+  margin-top:-1px;
+}
+
 .search-button:hover{
 	box-shadow:
   rgba(214, 35, 254, 0.2) 1px 1px,
@@ -157,9 +172,19 @@ textarea:focus, input:focus{
 	cursor:pointer;
 }
 
-.result-index, .search-form{
+.result-detail, .result-index, .search-form{
 	padding:15px 30px 25px 30px;
 	width:350px;
+}
+
+.result-index{
+  display:block;
+  animation-name: slideLeftIn;
+  animation-duration: 0.5s;
+    top: 0;
+  left: 0;
+  right: 0;
+  bottom:0;
 }
 
 
@@ -323,6 +348,7 @@ textarea:focus, input:focus{
 .name-label{
   /*display:block;*/
   /*padding-bottom:5px;*/
+  color: #4f4d4d;
   line-height:80%;
   font-weight:600;
   /*margin-bottom:1px;*/
@@ -330,3 +356,25 @@ textarea:focus, input:focus{
 .miles-label{
   font-size:14px !important;
   color: #797a7a;}
+
+
+.no-matches-text{
+  display:block;
+  font-weight:bold;
+  margin-top:10px;
+  font-size:20px;
+  color: #797a7a;
+}
+
+.no-matches-text-small{
+  display:block;
+  margin-top:10px;
+  font-size:14px;
+  color: #797a7a
+}
+
+.more-info-text{
+  font-size:10px;
+  color: #ce25fc;
+  transition: all 15s ease 0s;
+}

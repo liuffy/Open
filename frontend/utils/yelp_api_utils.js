@@ -14,7 +14,6 @@ export const getLocalBusinesses = (nameInput) => {
   // So, I simply wrap the function in a promise, resolving the value (dataObject)!
     return new Promise((resolve, reject) => {
 
-  console.log('We have entered getLocalBusinesses')
   findLocation()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
@@ -22,7 +21,7 @@ export const getLocalBusinesses = (nameInput) => {
       searchRequest.latitude = latitude;
       searchRequest.longitude = longitude;
       searchRequest.term = nameInput;
-      searchRequest.limit = '3';
+      searchRequest.limit = '4';
       let businessIds = [];
       console.log('We have calculated the users location')
 
@@ -36,7 +35,6 @@ export const getLocalBusinesses = (nameInput) => {
           let businessPhones = {};
 
           response.jsonBody.businesses.forEach(function(business){
-            console.log('We have made a call to the Yelp API the forEach is happening')
     // Only grab business IDs of places within 3 miles of user's location
             if (business.distance < 3218.69){
               businessIds.push(business.id)
@@ -71,7 +69,7 @@ export const getBusinessesByCity = (nameInput, locationInput) =>{
   searchRequest = {
     term: nameInput,
     location: locationInput,
-    limit: '3'
+    limit: '4'
   };
    yelp.accessToken(clientId, clientSecret).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
@@ -124,6 +122,7 @@ export const getBusinessData = (dataObject) => {
         resultObject[camelCasedName]["phone"] =  dataObject.phones[id] 
         resultObject[camelCasedName]["distance"] =  dataObject.distances[id]
         resultObject[camelCasedName]["name"] =  dataObject.names[id]
+        resultObject[camelCasedName]["camelCased"] =  camelCasedName;
 
         let businessHours;
 
@@ -135,7 +134,6 @@ export const getBusinessData = (dataObject) => {
            resultObject[camelCasedName]["address"] = response.jsonBody.location.display_address.toString();         
           // Openness 
 
-          console.log('hey now', resultObject[camelCasedName]["address"])
             resultObject[camelCasedName]["openOrNot"] = response.jsonBody.hours[0].is_open_now ? 'Open' : 'Closed'
 
             businessHours = {}
@@ -150,11 +148,8 @@ export const getBusinessData = (dataObject) => {
       })
 
     })
-      var clonedResult= (cloneObject(resultObject));
-      console.log('resultobject:',resultObject) // Shows all data! 
-      console.log('clonedObject:', clonedResult) // Missing data! (address, openOrNot, and hours)
-      console.log('stringified:',JSON.stringify(resultObject)) // Missing data (address, openOrNot, and hours)
-      resolve(resultObject); // send this to the action creator 
+      var clonedResult = Object.assign({}, resultObject);
+      resolve(clonedResult); // send this to the action creator 
 
   });
 }
