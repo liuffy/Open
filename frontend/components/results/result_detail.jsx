@@ -25,7 +25,7 @@ class ResultDetail extends React.Component{
   }
 
   amOrPm(hour){
-    if (hour/100 < 12){
+    if (hour/100 < 12 || hour/100 === 24){
       return 'AM'
     } else {
       return 'PM'
@@ -69,10 +69,17 @@ class ResultDetail extends React.Component{
     let address;
 
     // Format phone number
-    let phoneNumber = individualBusiness.phone;
-    let s2 = (""+ phoneNumber.substring(2, phoneNumber.length)).replace(/\D/g, '');
-    let m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
-    let formattedPhone =  (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+    let formattedPhone;
+
+    if (individualBusiness.phone.length < 5){
+      formattedPhone = "Not available"
+    } else {
+      let phoneNumber = individualBusiness.phone;
+      let s2 = (""+ phoneNumber.substring(2, phoneNumber.length)).replace(/\D/g, '');
+      let m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+      formattedPhone =  (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+    }
+
 
     let timeRemaining;
     let hoursOrMinutes;
@@ -86,25 +93,26 @@ class ResultDetail extends React.Component{
     let currentMinutes = currentDate.getMinutes(); // =>  30
     let currentTime = Number(currentHour.toString()+currentMinutes.toString())
 
-//  CLOSED 
+// CLOSED 
     let timeStatement;
     let closingTimeToday;
     let openingTimeToday;
 
-    if (individualBusiness.hours.hasOwnProperty(currentDay)){
-      closingTimeToday = individualBusiness.hours[currentDay][1]
-      openingTimeToday = individualBusiness.hours[currentDay][0]
+    if (individualBusiness.openOrNot !== "n/a"){
+      if (individualBusiness.hours.hasOwnProperty(currentDay)){
+        closingTimeToday = individualBusiness.hours[currentDay][1]
+        openingTimeToday = individualBusiness.hours[currentDay][0]
+      }
     }
 
-
-//  .... until the NEXT DAY
-let toOpen = false;
+// ...until sometime later today
 if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday) {
-  toOpen = true;
   let openingTime = this.addSemiColon(this.twelveHourFormat(openingTimeToday))
   let amOrPm = this.amOrPm(openingTimeToday)
 
-      timeStatement = `until ${openingTime} ${amOrPm} today (almost there!)`
+      timeStatement = `until ${openingTime} ${amOrPm} today (patience is a virtue!)`
+//  ... until the NEXT DAY
+
 } else if (individualBusiness.openOrNot === "Closed" && (!closingTimeToday || currentTime > closingTimeToday)){
         let nextOpenDay;
         let hours = individualBusiness.hours;
@@ -126,78 +134,20 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
     let formattedStart = this.addSemiColon(this.twelveHourFormat(nextStartTime))
     let amOrPm = this.amOrPm(nextStartTime)
     timeStatement = `until ${formattedStart} ${amOrPm} ${tomorrowOrNot} ${weekifiedDay}`
-    } 
 
-
-
-// - until a later hour in the same day 
-
-
-// OPEN
-// - until the end of the day
-    // let closingTimeToday = individualBusiness.hours[endHour][1].toString();
-// - until the next morning (overnight)
-
-
-
-    
-//     // We have the time now. 
-//     let openingTime;
-//     let openingHour;
+  // OPEN
+} else if (individualBusiness.openOrNot === "Open") {
+    let formattedEnd = this.addSemiColon(this.twelveHourFormat(closingTimeToday))
+    let amOrPm = this.amOrPm(closingTimeToday)
+    timeStatement = `until ${formattedEnd} ${amOrPm}`
+} else {
+  timeStatement = '(info on hours currently unavailable)'
+}
 
 
 
 
-//     let startHour;
-//     let startMinute;
 
-//     let endHour;
-//     let endMinute;
-
-//     if (nextStartTime.length > 3){
-//       startHour = Number(nextStartTime.substring(0,2))
-//       startMinute = Number(nextStartTime.substring(2,4))
-//       endHour = Number(closingTimeToday.substring(0,2))
-//       endMinute = Number(closingTimeToday.substring(2,4))
-//     } else {
-//       startHour = Number(nextStartTime.substring(0,1))
-//       startMinute = Number(nextStartTime.substring(1,3))      
-//       endHour = Number(closingTimeToday.substring(0,1))
-//       endMinute = Number(closingTimeToday.substring(1,3))
-//     }
-
-
-//     let amOrPm;
-
-//     if (individualBusiness.open === 'Closed'){
-//       amOrPm = startHour < 12 ? 'AM' : 'PM';
-      
-//     } else {
-//       amOrPm = endHour < 12 ? 'AM' : 'PM';
-//     }
- 
-//     startMinute = (startMinute.toString() < 10) ? '0' + startMinute.toString() : startMinute.toString()
-//     endMinute = (endMinute.toString() < 10) ? '0' + endMinute.toString() : endMinute.toString()
-
-//     console.log('Here is the start hour:', startHour)
-//     console.log('Here is the start minute:', startMinute)
-//     // openingTime.setHours(startHour, minutes, 0, 0)
-
-// let timeStatement;
-//   if (individualBusiness.openOrNot === 'Closed' ){
-//     timeStatement = `until ${startHour}:${startMinute} ${amOrPm}`
-//   } else if (individualBusiness.openOrNot === 'Open'){
-//     timeStatement = `until ${endHour}:${endMinute} ${amOrPm}`
-//   }
-
-  
-    // if (individualBusiness.openOrNot === 'Open'){
-    //   timeStatement = `for ${timeRemaining} ${hoursOrMinutes}` 
-    // } else if (individualBusiness.openOrNot === 'Closed' ){
-    //   timeStatement = `until ${ifTomorrow}, ${dayOfWeek}`
-    // } else {
-    //   timeStatement = 'Not enough data to confirm that it is open :-('
-    // }
     // Opens up address to Google map
 
     if (individualBusiness.address){
@@ -213,6 +163,8 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
     } else {
       address = "Not available"
     }
+
+  
 
     return (
       <div className="result-detail">

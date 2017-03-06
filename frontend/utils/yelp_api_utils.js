@@ -43,7 +43,9 @@ export const getLocalBusinesses = (nameInput) => {
                     businessIds.push(business.id)
                     // Convert from meters to miles
                     businessNames[business.id] = business.name;
-                    businessPhones[business.id] = business.phone;
+
+
+                    businessPhones[business.id] = business.phone.length > 5 ? business.phone : ''
                     businessDistances[business.id] = (Math.round((business.distance * 0.000621371) * 100) / 100)
                   }
                 })
@@ -81,6 +83,9 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
         client
           .search(searchRequest)
           .then(response => {
+
+            console.log(response)
+
             let businessIds = [];
             let businessDistances = {};
             let businessNames = {};
@@ -177,7 +182,16 @@ export const getBusinessData = (dataObject) => {
                 .open
                 .forEach(function (dayObject) {
                   let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
-                  businessHours[setDate] = [Number(dayObject.start), Number(dayObject.end), dayObject.is_overnight]
+                  let inCaseMidnight;
+
+                  if (Number(dayObject.end) === 0){
+                    inCaseMidnight = 2400
+                  } else {
+                    inCaseMidnight = Number(dayObject.end)
+                  }
+
+
+                  businessHours[setDate] = [Number(dayObject.start), inCaseMidnight, dayObject.is_overnight]
                   resultObject[camelCasedName]["hours"] = businessHours;
                 })
             }
