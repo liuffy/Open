@@ -9,6 +9,8 @@ class ResultsIndex extends React.Component {
   }
 
   render(){
+        console.log(store.getState())
+
   	const {results, loading} = this.props;
   	let loadedResults;
 

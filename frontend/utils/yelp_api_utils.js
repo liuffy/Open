@@ -52,7 +52,8 @@ export const getLocalBusinesses = (nameInput) => {
                 ids: businessIds,
                 distances: businessDistances,
                 names: businessNames,
-                phones: businessPhones
+                phones: businessPhones,
+                nameInput: nameInput
               }
               resolve(dataObject); // send this to the .then by resolving it
             });
@@ -104,7 +105,8 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
               ids: businessIds,
               distances: businessDistances,
               names: businessNames,
-              phones: businessPhones
+              phones: businessPhones,
+              nameInput: nameInput
             }
             resolve(dataObject); // send this to the action creator
           });
@@ -139,6 +141,7 @@ export const getBusinessData = (dataObject) => {
         resultObject[camelCasedName]["distance"] = dataObject.distances[id]
         resultObject[camelCasedName]["name"] = dataObject.names[id]
         resultObject[camelCasedName]["camelCased"] =  camelCasedName;
+        resultObject[camelCasedName]["nameInput"] =  dataObject.nameInput;
 
 
         let businessHours;
@@ -148,9 +151,8 @@ export const getBusinessData = (dataObject) => {
           .then(response => yelp.client(response.jsonBody.access_token))
           .then(client => client.business(id))
           .then(response => {
-            // Correctly formatted address
-
             console.log(response)
+
             resultObject[camelCasedName]["address"] = response
               .jsonBody
               .location
@@ -176,7 +178,8 @@ export const getBusinessData = (dataObject) => {
                 .hours[0]
                 .open
                 .forEach(function (dayObject) {
-                  businessHours[weekify(dayObject)] = `${dayObject.start} - ${dayObject.end}`
+                  let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
+                  businessHours[setDate] = [Number(dayObject.start), Number(dayObject.end)]
                   resultObject[camelCasedName]["hours"] = businessHours;
                 })
             }
@@ -187,13 +190,6 @@ export const getBusinessData = (dataObject) => {
           })
       })
 
-      // var clonedResult = Object.assign({}, resultObject); //
-      // console.log('resultobject:',resultObject) // Shows all data! //
-      // console.log('clonedObject:', clonedResult) // Missing data! (address,
-      // openOrNot, and hours) //
-      // console.log('stringified:',JSON.stringify(resultObject)) // Missing data
-      // (address, openOrNot, and hours) resolve(resultObject); // send this to the
-      // action creator
     });
   return new Promise((resolve) => {
     Promise
@@ -237,34 +233,3 @@ function findLocationError(err) {
   console.warn('[findLocationError]', err.code, err.message, err);
 };
 
-function weekify(dayObject) {
-
-  if (dayObject.day === 0) {
-    return "Mon"
-  } else if (dayObject.day === 1) {
-    return "Tues"
-  } else if (dayObject.day === 2) {
-    return "Wed"
-  } else if (dayObject.day === 3) {
-    return "Thurs"
-  } else if (dayObject.day === 4) {
-    return "Fri"
-  } else if (dayObject.day === 5) {
-    return "Sat"
-  } else if (dayObject.day === 6) {
-    return "Sun"
-  }
-}
-
-function cloneObject(obj) {
-  if (obj === null || typeof obj !== 'object') {
-    return obj;
-  }
-
-  var temp = obj.constructor(); // give temp the original obj's constructor
-  for (var key in obj) {
-    temp[key] = cloneObject(obj[key]);
-  }
-
-  return temp;
-}
