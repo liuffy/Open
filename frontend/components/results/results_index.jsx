@@ -15,10 +15,11 @@ class ResultsIndex extends React.Component {
 
     if (Object.keys(results).length === 0){
       loadedResults = <div><span className="no-matches-text">No matches!</span>
-                      <span className="no-matches-text-small">This may be due to the following:</span>
+                      <span className="no-matches-text-small">This is likely due to the following:</span>
                       <ul>
-                        <li className="no-matches-text-small">You did a local search and the business doesn't fall within a 2 mi radius</li>
-                        <li className="no-matches-text-small">You made a typo in one of the fields</li>
+                        <li className="no-matches-text-small">1. You searched based on 'current location' and the business doesn't fall within a 3 mi radius</li>
+                        <li className="no-matches-text-small">2. It's a new business that isn't established online yet.</li>
+                        <li className="no-matches-text-small">3. You were so excited about using Open that you mispelled something.</li>
                       </ul>
                       </div>
 

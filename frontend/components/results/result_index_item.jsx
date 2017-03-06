@@ -19,9 +19,11 @@ handleClick(e) {
 
 		let openClass;
 		if (individualResult.openOrNot === "Closed"){
-		openClass = "pacifico-small-closed";
+			openClass = "pacifico-small-closed";
+		} else if (individualResult.openOrNot === "Open"){
+			openClass = "pacifico-small-open";
 		} else {
-		openClass = "pacifico-small-open";
+			openClass = "pacifico-small-not-available";
 		}
 
 
@@ -29,8 +31,8 @@ handleClick(e) {
 			<div className="index-item group">
 
 					<Link to={`/${individualResult.camelCased}`}>
-					<span className="name-label">{individualResult.name}<br/>
 				<div className="left-side">
+					<span className="name-label">{individualResult.name}</span><br/>
 					<p className="miles-label">{individualResult.distance} miles</p><br/> 
 				</div>
 
@@ -38,7 +40,7 @@ handleClick(e) {
 					<span className= {openClass}>{individualResult.openOrNot}</span> 
 				</div>
 
-				</span></Link>
+				</Link>
 			</div>
 		)
 	}

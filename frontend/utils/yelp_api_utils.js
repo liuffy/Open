@@ -18,7 +18,7 @@ export const getLocalBusinesses = (nameInput) => {
       searchRequest.latitude = latitude;
       searchRequest.longitude = longitude;
       searchRequest.term = nameInput;
-      searchRequest.limit = '3';
+      searchRequest.limit = '5';
       let businessIds = [];
       console.log('We have calculated the users location')
 
@@ -40,7 +40,7 @@ export const getLocalBusinesses = (nameInput) => {
                 .forEach(function (business) {
                   console.log('We have made a call to the Yelp API the forEach is happening')
                   // Only grab business IDs of places within 3 miles of user's location
-                  if (business.distance < 3218.69) {
+                  if (business.distance < 4828.03) {
                     businessIds.push(business.id)
                     // Convert from meters to miles
                     businessNames[business.id] = business.name;
@@ -72,7 +72,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
     searchRequest = {
       term: nameInput,
       location: locationInput,
-      limit: '3'
+      limit: '5'
     };
     yelp
       .accessToken(clientId, clientSecret)
@@ -149,15 +149,24 @@ export const getBusinessData = (dataObject) => {
           .then(client => client.business(id))
           .then(response => {
             // Correctly formatted address
+
+            console.log(response)
             resultObject[camelCasedName]["address"] = response
               .jsonBody
               .location
               .display_address
               .toString();
             // Openness console.log('hey now', resultObject[camelCasedName]["address"])
-            resultObject[camelCasedName]["openOrNot"] = response.jsonBody.hours && response.jsonBody.hours[0].is_open_now
-              ? 'Open'
-              : 'Closed'
+            let openOrNot;
+            if (response.jsonBody.hours && response.jsonBody.hours[0].is_open_now === true){
+              openOrNot ='Open'
+            } else if (response.jsonBody.hours && response.jsonBody.hours[0].is_open_now === false){
+              openOrNot = 'Closed'
+            } else {
+              openOrNot ='n/a'
+            }
+            resultObject[camelCasedName]["openOrNot"] = openOrNot
+
 
             businessHours = {}
             // Collect info about business hours
@@ -243,7 +252,7 @@ function weekify(dayObject) {
   } else if (dayObject.day === 5) {
     return "Sat"
   } else if (dayObject.day === 6) {
-    return "Sunday"
+    return "Sun"
   }
 }
 

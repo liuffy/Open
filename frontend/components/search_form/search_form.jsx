@@ -64,7 +64,7 @@ class SearchForm extends React.Component {
               id="current_location_button"
                className="currentLocation"
                name='searchOption'
-               value="currentLocation"/> Current location <br/>        
+               value="currentLocation" defaultChecked /> Current location <br/>        
           <p
             className="reveal-if-active-2">Easy peasy, we'll geolocate you</p>
          <input 
@@ -72,7 +72,7 @@ class SearchForm extends React.Component {
                id="search_city_button"
                className="cityInput"
                name='searchOption'
-               value="citySearch"/> Find results near: <br/>
+               value="citySearch"/> Near (address, street, or city): <br/>
 
          <input 
           className="standard-input-field locationQuery reveal-if-active"

@@ -7,11 +7,16 @@ class ResultDetail extends React.Component{
   }
 
   render(){
-    console.log('current path:', this.props.location.pathname)
     let {businessName, individualBusiness} = this.props;
     let addressLink = `http://maps.google.com/?q=${individualBusiness.address}`
 
     let address;
+    let phoneNumber = individualBusiness.phone
+    let s2 = (""+ phoneNumber.substring(2, phoneNumber.length)).replace(/\D/g, '');
+    let m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+    let formattedPhone =  (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+
+
     // Opens up address to Google map
 
     if (individualBusiness.address){
@@ -27,6 +32,7 @@ class ResultDetail extends React.Component{
     } else {
       address = "Not available"
     }
+
     return (
       <div className="result-detail">
         <Link 
@@ -44,7 +50,7 @@ class ResultDetail extends React.Component{
               </div>
        <div className="technical-details">
         <div className="phone-side">
-          <p >{individualBusiness.phone}</p><br/> 
+          <p>{formattedPhone}</p><br/> 
         </div>
 
         <div className="address-side">

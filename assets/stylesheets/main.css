@@ -286,16 +286,24 @@ textarea:focus, input:focus{
 
 .pacifico-small-open{
   font-family: 'Pacifico', cursive;
-  font-size:20px;
+  font-size:24px;
   text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
   color: #ce25fc;
 }
 
 .pacifico-small-closed{
   font-family: 'Pacifico', cursive;
-  font-size:20px;
+  font-size:24px;
   text-shadow: 2px 2px rgba(158, 15, 191, 0.1);
   color: #5636af;
+
+}
+
+.pacifico-small-not-available{
+  font-family: 'Pacifico', cursive;
+  font-size:24px;
+  text-shadow: 2px 2px rgba(98, 102, 101, 0.1);
+  color: #626665;
 }
 
 .results-label{
@@ -341,20 +349,20 @@ textarea:focus, input:focus{
   word-wrap: break-word;
   display:inline-block;
   float:left;
-  width:240px;
+  width:220px;
   margin-top:15px;
-  /*border:1px solid black;*/
+  margin-right:15px;
 }
 
 .left-side span{
-  font-size:18px;
+  font-size:16px;
 }
 
 .right-side{
   display:inline-block;
-  float:right;
+  float:left;
   width:60px;
-  margin-bottom:5px;
+  margin-top:10px;
 }
 
 .name-label{
@@ -365,7 +373,7 @@ textarea:focus, input:focus{
 }
 
 .miles-label{
-  font-size:14px !important;
+  font-size:12px !important;
   color: #939393;
   letter-spacing:1px;
 }
@@ -434,7 +442,7 @@ textarea:focus, input:focus{
   transition: all 0.15s ease 0s;
   color: #7e5ded;
   font-weight:600;
-  text-shadow: 1px 1px rgba(140, 130, 178, 0.4);
+  text-shadow: 1px 1px rgba(140, 130, 178, 0.2);
 }
 
 .address-side:hover{
@@ -444,7 +452,7 @@ textarea:focus, input:focus{
 }
 
 .technical-details{
-  margin-top:20px;
+  margin-top:30px;
 }
 
 
