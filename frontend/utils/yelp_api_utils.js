@@ -11,7 +11,6 @@ export const getLocalBusinesses = (nameInput) => {
   // the function in a promise, resolving the value (dataObject)!
   return new Promise((resolve, reject) => {
 
-    console.log('We have entered getLocalBusinesses')
     findLocation().then(pos => {
       const {latitude, longitude} = pos.coords;
       // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude);
@@ -26,7 +25,7 @@ export const getLocalBusinesses = (nameInput) => {
         .accessToken(clientId, clientSecret)
         .then(response => {
           const client = yelp.client(response.jsonBody.access_token);
-
+          console.log(response)
           client
             .search(searchRequest)
             .then(response => {
@@ -151,7 +150,6 @@ export const getBusinessData = (dataObject) => {
           .then(response => yelp.client(response.jsonBody.access_token))
           .then(client => client.business(id))
           .then(response => {
-            console.log(response)
 
             resultObject[camelCasedName]["address"] = response
               .jsonBody
@@ -179,7 +177,7 @@ export const getBusinessData = (dataObject) => {
                 .open
                 .forEach(function (dayObject) {
                   let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
-                  businessHours[setDate] = [Number(dayObject.start), Number(dayObject.end)]
+                  businessHours[setDate] = [Number(dayObject.start), Number(dayObject.end), dayObject.is_overnight]
                   resultObject[camelCasedName]["hours"] = businessHours;
                 })
             }
@@ -212,7 +210,6 @@ function findLocation() {
     timeout: 20000
   }
   return new Promise((resolve, reject) => {
-    // console.log ('We are currently finding location.....')
     return navigator
       .geolocation
       .getCurrentPosition(resolve, reject, options)

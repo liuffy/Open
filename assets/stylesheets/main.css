@@ -533,3 +533,8 @@ textarea:focus, input:focus{
   position:relative;
   margin:10px auto;
 }
+
+.will-open{
+  color: #d623fe,
+  font-weight: 400i;
+}

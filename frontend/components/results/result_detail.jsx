@@ -32,6 +32,13 @@ class ResultDetail extends React.Component{
     }
   }
 
+  twelveHourFormat(num){
+
+    let newHour;
+    newHour = (num/100 > 12) ? num - 1200 : num;
+    return newHour;
+  }
+
   addSemiColon(num){
     var semi = ":";
     let numString = num.toString()
@@ -55,6 +62,7 @@ class ResultDetail extends React.Component{
       openClass = "pacifico-big-not-available";
     }
 
+    let closeToOpenClass;
 
     let addressLink = `http://maps.google.com/?q=${individualBusiness.address}`
 
@@ -77,21 +85,27 @@ class ResultDetail extends React.Component{
     let currentHour = currentDate.getHours(); // => 9
     let currentMinutes = currentDate.getMinutes(); // =>  30
     let currentTime = Number(currentHour.toString()+currentMinutes.toString())
-    console.log(currentTime)
 
 //  CLOSED 
     let timeStatement;
     let closingTimeToday;
-    
+    let openingTimeToday;
+
     if (individualBusiness.hours.hasOwnProperty(currentDay)){
       closingTimeToday = individualBusiness.hours[currentDay][1]
+      openingTimeToday = individualBusiness.hours[currentDay][0]
     }
 
-    console.log('Closing time:', closingTimeToday)
 
 //  .... until the NEXT DAY
-                                                    // There is no closing time b/c it's been closed the whole day
-    if (individualBusiness.openOrNot === "Closed" && (!closingTimeToday || currentTime > closingTimeToday) ){
+let toOpen = false;
+if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday) {
+  toOpen = true;
+  let openingTime = this.addSemiColon(this.twelveHourFormat(openingTimeToday))
+  let amOrPm = this.amOrPm(openingTimeToday)
+
+      timeStatement = `until ${openingTime} ${amOrPm} today (almost there!)`
+} else if (individualBusiness.openOrNot === "Closed" && (!closingTimeToday || currentTime > closingTimeToday)){
         let nextOpenDay;
         let hours = individualBusiness.hours;
 
@@ -107,12 +121,12 @@ class ResultDetail extends React.Component{
           }
     } 
     let weekifiedDay = this.weekify(nextOpenDay)
-    let tomorrowOrNot = (nextOpenDay === currentDay + 1)  ? 'tomorrow' : '';
+    let tomorrowOrNot = (nextOpenDay === currentDay + 1)  ? 'tomorrow,' : '';
     let nextStartTime = individualBusiness.hours[nextOpenDay][0].toString();
-    let formattedStart = this.addSemiColon(nextStartTime)
+    let formattedStart = this.addSemiColon(this.twelveHourFormat(nextStartTime))
     let amOrPm = this.amOrPm(nextStartTime)
-    timeStatement = `until ${formattedStart} ${amOrPm} ${tomorrowOrNot}, ${weekifiedDay}`
-    }
+    timeStatement = `until ${formattedStart} ${amOrPm} ${tomorrowOrNot} ${weekifiedDay}`
+    } 
 
 
 
