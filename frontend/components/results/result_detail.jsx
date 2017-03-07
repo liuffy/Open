@@ -3,6 +3,17 @@ import {withRouter, Link } from 'react-router';
 
 var Slider = require('react-slick');
 
+            
+            
+let weekday = new Array(7);
+            weekday[1]="Monday";
+            weekday[2]="Tuesday";
+            weekday[3]="Wednesday";
+            weekday[4]="Thursday";
+            weekday[5]="Friday";
+            weekday[6]="Saturday";
+            weekday[0]="Sunday";
+
 class ResultDetail extends React.Component{
    constructor(props){
     super(props);
@@ -107,6 +118,25 @@ class ResultDetail extends React.Component{
     let timeStatement;
     let closingTimeToday;
     let openingTimeToday;
+    let nextOpenDay;
+    let weekifiedDay;
+
+
+    let startingNum = (currentDay === 6) ? 0 : currentDay + 1
+    let hours = individualBusiness.hours;
+
+// - First, gotta iterate through the hours object and find the next day it will be open
+
+  if (individualBusiness.openOrNot === "Open" || individualBusiness.openOrNot === "Closed"){
+    for (let i =  startingNum; i < 7; i++) { 
+          if (hours[i]){
+            nextOpenDay = i;
+            break
+          }
+    } 
+  }
+
+    weekifiedDay = this.weekify(nextOpenDay)
 
     if (individualBusiness.openOrNot !== "n/a"){
       if (individualBusiness.hours.hasOwnProperty(currentDay)){
@@ -122,25 +152,11 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
   let openingTime = this.addSemiColon(this.twelveHourFormat(openingTimeToday))
   let amOrPm = this.amOrPm(openingTimeToday)
 
-      timeStatement = `until ${openingTime} ${amOrPm} today (patience is a virtue!)`
+      timeStatement = `until ${openingTime} ${amOrPm} today (patience!)`
 //  ... until the NEXT DAY
 
 } else if (individualBusiness.openOrNot === "Closed" && (!closingTimeToday || currentTime > closingTimeToday)){
-        let nextOpenDay;
-        let hours = individualBusiness.hours;
-
         // If we're at the end of the week, restart
-        let startingNum = (currentDay === 6) ? 0 : currentDay + 1
-
-// - First, gotta iterate through the hours object and find the next day it will be open
-        for (let i =  startingNum; i < 7; i++) { 
-
-          if (hours[i]){
-            nextOpenDay = i;
-            break
-          }
-    } 
-    let weekifiedDay = this.weekify(nextOpenDay)
     let tomorrowOrNot = (nextOpenDay === currentDay + 1)  ? 'tomorrow,' : '';
     let nextStartTime = individualBusiness.hours[nextOpenDay][0].toString();
     let formattedStart = this.addSemiColon(this.twelveHourFormat(nextStartTime))
@@ -161,7 +177,34 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
 }
 
 
+    let openDays = [];
 
+    if (individualBusiness.openOrNot === "Open" || individualBusiness.openOrNot === "Closed"){
+      Object.keys(individualBusiness.hours).forEach(function(openDay){
+        openDays.push(openDay)
+      })
+    }
+
+
+let slides;
+
+if (individualBusiness.openOrNot === "n/a"){
+  slides = <p className="no-info-yet">Check back in the future for updated info!</p>
+}else if (individualBusiness.openOrNot === "Open" || individualBusiness.openOrNot === "Closed"){
+  slides = <Slider {...settings}
+            className="carousel-container">
+
+            {
+
+              openDays.map( (item, idx) => ( 
+              <div className="tester" key={idx+1}>
+                  <span className="display-hours" key={idx+3}>{this.addSemiColon(this.twelveHourFormat(individualBusiness.hours[item][0]))} {this.amOrPm(individualBusiness.hours[item][0])} &#8212;
+    {this.addSemiColon(this.twelveHourFormat(individualBusiness.hours[item][1]))} {this.amOrPm(individualBusiness.hours[item][1])}</span>
+                  <p className="display-date" key={idx+2}>{weekday[item]}</p>
+              </div>))
+          }
+           </Slider>
+} 
 
     // Opens up address to Google map
 
@@ -179,7 +222,6 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
       address = "Not available"
     }
 
-  
 
     return (
       <div className="result-detail">
@@ -210,29 +252,14 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
             src = '../../../assets/images/pin_vector_small.png'/>
             {address}
           </div>
+          </div>
+ 
         <img className="icon" 
              src ="../../../assets/images/clock_vector.png"/>
-        <p className="future-hours">Future Hours:</p>
+        <p className="future-hours">Hours by Day</p>
 
-        <Slider {...settings}
-          className="carousel-container">
+        {slides}
 
-          <div>
-            <h3 className="display-date">make playlists</h3>
-            <h3 className="display-date">make playlists</h3>
-          </div>
-
-          <div>
-            <h3 className="display-date">save playlists</h3>
-          </div>
-
-          <div>
-            <h3 className="display-date">browse other playlists!</h3>
-          </div>
-          
-         </Slider>
-
-          </div>
       </div>
       )
   }

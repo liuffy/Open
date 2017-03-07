@@ -32,9 +32,13 @@ handleClick(e) {
 
 					<Link to={`/${individualResult.camelCased}`}>
 				<div className="left-side">
+				<div className="image-container">
+					<img className="image-url" src={individualResult.image} />
+				</div>
 					<span className="name-label">{individualResult.name}</span><br/>
 					<p className="miles-label">{individualResult.distance} miles</p><br/> 
 				</div>
+
 
 					<div className="right-side">
 					<span className= {openClass}>{individualResult.openOrNot}</span> 

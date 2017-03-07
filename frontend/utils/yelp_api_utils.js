@@ -32,6 +32,7 @@ export const getLocalBusinesses = (nameInput) => {
               let businessDistances = {};
               let businessNames = {};
               let businessPhones = {};
+              let businessImages = {};
 
               response
                 .jsonBody
@@ -43,6 +44,7 @@ export const getLocalBusinesses = (nameInput) => {
                     businessIds.push(business.id)
                     // Convert from meters to miles
                     businessNames[business.id] = business.name;
+                    businessImages[business.id] = business.image_url ? business.image_url : "../../assets/images/open_cursive.png";
 
 
                     businessPhones[business.id] = business.phone.length > 5 ? business.phone : ''
@@ -54,7 +56,7 @@ export const getLocalBusinesses = (nameInput) => {
                 distances: businessDistances,
                 names: businessNames,
                 phones: businessPhones,
-                nameInput: nameInput
+                images: businessImages,
               }
               resolve(dataObject); // send this to the .then by resolving it
             });
@@ -90,6 +92,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             let businessDistances = {};
             let businessNames = {};
             let businessPhones = {};
+            let businessImages = {};
 
             response
               .jsonBody
@@ -98,6 +101,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
                 businessIds.push(business.id)
                 businessNames[business.id] = business.name;
                 businessPhones[business.id] = business.phone;
+                businessImages[business.id] = business.image_url ? business.image_url : "../../assets/images/open_cursive.png";
                 businessDistances[
                   business
                     .id
@@ -108,9 +112,9 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             var dataObject = {
               ids: businessIds,
               distances: businessDistances,
+              images: businessImages,
               names: businessNames,
-              phones: businessPhones,
-              nameInput: nameInput
+              phones: businessPhones
             }
             resolve(dataObject); // send this to the action creator
           });
@@ -142,10 +146,10 @@ export const getBusinessData = (dataObject) => {
 
         // Inject info from the previous call
         resultObject[camelCasedName]["phone"] = dataObject.phones[id]
+        resultObject[camelCasedName]["image"] = dataObject.images[id]
         resultObject[camelCasedName]["distance"] = dataObject.distances[id]
         resultObject[camelCasedName]["name"] = dataObject.names[id]
         resultObject[camelCasedName]["camelCased"] =  camelCasedName;
-        resultObject[camelCasedName]["nameInput"] =  dataObject.nameInput;
 
 
         let businessHours;
@@ -156,6 +160,7 @@ export const getBusinessData = (dataObject) => {
           .then(client => client.business(id))
           .then(response => {
 
+            console.log(response)
             resultObject[camelCasedName]["address"] = response
               .jsonBody
               .location
@@ -182,8 +187,6 @@ export const getBusinessData = (dataObject) => {
                 .open
                 .forEach(function (dayObject) {
                   let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
-
-                  let inCaseNoon
                   let inCaseMidnight;
 
                   if (Number(dayObject.end) === 0){
