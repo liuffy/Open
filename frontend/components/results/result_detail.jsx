@@ -35,7 +35,7 @@ class ResultDetail extends React.Component{
   twelveHourFormat(num){
 
     let newHour;
-    newHour = (num/100 > 12) ? num - 1200 : num;
+    newHour = (num/100 > 13) ? num - 1200 : num;
     return newHour;
   }
 
@@ -136,7 +136,10 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
     timeStatement = `until ${formattedStart} ${amOrPm} ${tomorrowOrNot} ${weekifiedDay}`
 
   // OPEN
-} else if (individualBusiness.openOrNot === "Open") {
+} else if (individualBusiness.openOrNot === "Open" &&  
+                        individualBusiness.hours[currentDay][0] === individualBusiness.hours[currentDay][1]){ // 24 hrs
+  timeStatement = 'all day (24 hours) today!'
+} else if (individualBusiness.openOrNot === "Open") { // less than 24 hrs
     let formattedEnd = this.addSemiColon(this.twelveHourFormat(closingTimeToday))
     let amOrPm = this.amOrPm(closingTimeToday)
     timeStatement = `until ${formattedEnd} ${amOrPm}`
@@ -177,7 +180,7 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
             to={'/'}>new search </Link><br/>
 
         <div className="big-results-text"><br/>
-          <p className="search-instructions results-text">{individualBusiness.name} is </p>
+          <p className="search-instructions results-text business-name">{individualBusiness.name} is </p>
           <p className={openClass}>{individualBusiness.openOrNot}</p>
           <p className="search-instructions results-text">{timeStatement}</p>
               </div>

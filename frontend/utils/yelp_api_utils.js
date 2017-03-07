@@ -182,6 +182,8 @@ export const getBusinessData = (dataObject) => {
                 .open
                 .forEach(function (dayObject) {
                   let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
+
+                  let inCaseNoon
                   let inCaseMidnight;
 
                   if (Number(dayObject.end) === 0){
