@@ -36,7 +36,8 @@ handleClick(e) {
 					<img className="image-url" src={individualResult.image} />
 				</div>
 					<span className="name-label">{individualResult.name}</span><br/>
-					<p className="miles-label">{individualResult.distance} miles</p><br/> 
+					<p className="miles-label">{individualResult.address1}</p><br/> 
+					<p className="miles-label purp">{individualResult.distance} miles</p><br/> 
 				</div>
 
 

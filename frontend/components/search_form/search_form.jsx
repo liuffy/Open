@@ -60,8 +60,14 @@ class SearchForm extends React.Component {
 
 
   render(){
-    let {tracktlists} = this.props;
-  	let {nameQuery, locationQuery} = this.state;
+  	let {nameQuery, locationQuery, position, lat, lng} = this.state;
+
+    let button;
+    if (position !== "" || locationQuery !== ""){
+      button = <button className="search-button">check</button>
+    } else {
+       button = <p className="calculating">Calculating your location...</p>
+    }
 
   	return(
 
@@ -106,8 +112,7 @@ class SearchForm extends React.Component {
           placeholder="ex: Webster St, Oakland"
           onChange={this.update('locationQuery')} />
 
-        <button
-        className="search-button">check</button>
+       {button}
              
         </form>
       </div>

@@ -11,9 +11,7 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
   // the function in a promise, resolving the value (dataObject)!
   return new Promise((resolve, reject) => {
 
-      console.log(lat)
-      console.log(lng)
-      console.log(nameInput)
+
       // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude);
       searchRequest.latitude = lat;
       searchRequest.longitude = lng;
@@ -34,6 +32,7 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
               let businessNames = {};
               let businessPhones = {};
               let businessImages = {};
+              let businessStreets = {};
 
               response
                 .jsonBody
@@ -45,6 +44,7 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
                     businessIds.push(business.id)
                     // Convert from meters to miles
                     businessNames[business.id] = business.name;
+                    businessStreets[business.id] = business.location.address1;
                     businessImages[business.id] = business.image_url ? business.image_url : "../../assets/images/open_cursive.png";
 
 
@@ -58,6 +58,7 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
                 names: businessNames,
                 phones: businessPhones,
                 images: businessImages,
+                streets: businessStreets
               }
               resolve(dataObject); // send this to the .then by resolving it
             });
@@ -93,6 +94,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
             let businessNames = {};
             let businessPhones = {};
             let businessImages = {};
+            let businessStreets = {}
 
             response
               .jsonBody
@@ -101,6 +103,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
                 businessIds.push(business.id)
                 businessNames[business.id] = business.name;
                 businessPhones[business.id] = business.phone;
+                businessStreets[business.id] = business.location.address1;
                 businessImages[business.id] = business.image_url ? business.image_url : "../../assets/images/open_cursive.png";
                 businessDistances[
                   business
@@ -114,7 +117,8 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
               distances: businessDistances,
               images: businessImages,
               names: businessNames,
-              phones: businessPhones
+              phones: businessPhones,            
+              streets: businessStreets
             }
             resolve(dataObject); // send this to the action creator
           });
@@ -146,6 +150,7 @@ export const getBusinessData = (dataObject) => {
 
         // Inject info from the previous call
         resultObject[camelCasedName]["phone"] = dataObject.phones[id]
+        resultObject[camelCasedName]["address1"] = dataObject.streets[id]
         resultObject[camelCasedName]["image"] = dataObject.images[id]
         resultObject[camelCasedName]["distance"] = dataObject.distances[id]
         resultObject[camelCasedName]["name"] = dataObject.names[id]
