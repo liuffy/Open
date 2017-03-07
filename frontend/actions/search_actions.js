@@ -6,14 +6,14 @@ export const RECEIVE_SINGLE_RESULT = "RECEIVE_SINGLE_RESULT";
 import * as YelpAPIUtil from '../utils/yelp_api_utils';
 
 // Thunk allows you to write action creators that return a function instead of an action
-export function createLocalResults(nameQuery){
+export function createLocalResults(nameQuery, lat, lng){
 	  // Redux Thunk will inject dispatch here:
 	return (dispatch) => {
 	  // Reducers may handle this to set a flag like isFetching
 		dispatch(requestResults());
 
 		// Perform the actual API call that grabs IDs and distances of the results
-		 return YelpAPIUtil.getLocalBusinesses(nameQuery)
+		 return YelpAPIUtil.getLocalBusinesses(nameQuery, lat, lng)
 		 .then(dataObject => {
 
 				// Another call, using the ID data from the previous call to grab 

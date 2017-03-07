@@ -7,7 +7,10 @@ class SearchForm extends React.Component {
     super(props);
     this.state = {
        nameQuery: "",
-       locationQuery: ""
+       locationQuery: "",
+       position: "",
+       lat:"",
+       lng:""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -16,14 +19,36 @@ class SearchForm extends React.Component {
   	return e => this.setState({[property]: e.target.value});
   }
 
+  componentDidMount() {
+ 
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({position});
+        console.log(position)
+
+      },
+ 
+      (error) => alert(error),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+ 
+  }
+
   handleSubmit(e) {
+
     let struggleText = "";
     e.preventDefault();
-    let {nameQuery, locationQuery} = this.state; // What we're actually typing into the form
+    let {nameQuery, locationQuery, position, lat, lng} = this.state; // What we're actually typing into the form
     let {createLocalResults, createCityResults} = this.props;
 
-    if (document.getElementById('current_location_button').checked){
-        createLocalResults(nameQuery)
+
+    if (document.getElementById('current_location_button').checked && position !== ""){
+        console.log('cmon lat', lat)
+      console.log('cmon lng', lng)
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+    
+        createLocalResults(nameQuery, lat, lng)
         this.props.router.push(`/results`)
     }else if (locationQuery.length > 0 && nameQuery.length > 0 && document.getElementById('search_city_button').checked){
        createCityResults(nameQuery, locationQuery)

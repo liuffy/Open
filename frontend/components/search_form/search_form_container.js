@@ -9,7 +9,7 @@ const mapStateToProps = (state) =>({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createLocalResults: nameQuery => dispatch(createLocalResults(nameQuery)),
+  createLocalResults: (nameQuery, lat, lng)=> dispatch(createLocalResults(nameQuery, lat, lng)),
   createCityResults: (nameQuery, locationQuery) => dispatch(createCityResults(nameQuery, locationQuery))
 })
 

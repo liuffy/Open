@@ -5,17 +5,18 @@ const clientSecret = 'LWIK70PM6wSSSRhTPpNNsIBOvwViWG3OuHHpEz1gkMLFd6yPHK6ywDO8mE
 
 let searchRequest = {};
 
-export const getLocalBusinesses = (nameInput) => {
+export const getLocalBusinesses = (nameInput, lat, lng) => {
 
   // Instead of returning a value, I need to return a promise. So, I simply wrap
   // the function in a promise, resolving the value (dataObject)!
   return new Promise((resolve, reject) => {
 
-    findLocation().then(pos => {
-      const {latitude, longitude} = pos.coords;
+      console.log(lat)
+      console.log(lng)
+      console.log(nameInput)
       // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude);
-      searchRequest.latitude = latitude;
-      searchRequest.longitude = longitude;
+      searchRequest.latitude = lat;
+      searchRequest.longitude = lng;
       searchRequest.term = nameInput;
       searchRequest.limit = '5';
       let businessIds = [];
@@ -66,7 +67,6 @@ export const getLocalBusinesses = (nameInput) => {
         });
 
     });
-  })
 }
 
 // This works fine
