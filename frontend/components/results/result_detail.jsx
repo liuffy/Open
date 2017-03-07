@@ -217,11 +217,19 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
         <Slider {...settings}
           className="carousel-container">
 
-          <h3 className="subtagline">make playlists</h3>
-        
-          <h3 className="subtagline">save playlists</h3>
+          <div>
+            <h3 className="display-date">make playlists</h3>
+            <h3 className="display-date">make playlists</h3>
+          </div>
 
-          <h3 className="subtagline">browse other playlists!</h3>
+          <div>
+            <h3 className="display-date">save playlists</h3>
+          </div>
+
+          <div>
+            <h3 className="display-date">browse other playlists!</h3>
+          </div>
+          
          </Slider>
 
           </div>

@@ -34,7 +34,7 @@ class ResultsIndex extends React.Component {
         })
     }
   	return loading ? <div className="spinner">
-  <img className="loader-logo" src="http://res.cloudinary.com/liuffy/image/upload/v1488581396/open_cursive_sligtq.png"/>
+  <img className="loader-logo" src="../../../assets/images/open_cursive.png"/>
   <span className="loader-text">Searching...</span>
 </div> :
 		<div className="result-index">

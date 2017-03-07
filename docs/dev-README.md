@@ -13,7 +13,7 @@ While websites such as Yelp provide a wealth of information about different busi
 
 **Open** extracts this valuable piece of information, saving users the energy of having to parse all the information presented on a page. 
 
-In addition, Open saves the user from typing in their location by using geolocation API to determine where they are.
+In addition, Open saves the user from typing in their location by using the HTML5 geolocation API to determine where they are.
 
 ### Functionality and MVP
 
@@ -91,16 +91,16 @@ By the end of the day, the project folder will have:
 
 **Day 4: Redux Cycles - Part 2 (Rendering!)**
 * Create components for extension.
-- [ ] `root.jsx` - Figure out routing 
-- [ ] `SearchForm`: will be the input form for submitting queries
-- [ ] `ResultList`: (index) will display all results 
-  - [ ] contains an unordered list of `ResultIndexItem`s for each of the results
-- [ ] `ResultShow`: provides additional information about the business (i.e. address/#)
+- [X] `root.jsx` - Figure out routing 
+- [X] `SearchForm`: will be the input form for submitting queries
+- [X] `ResultList`: (index) will display all results 
+  - [X] contains an unordered list of `ResultIndexItem`s for each of the results
+- [X] `ResultShow`: provides additional information about the business (i.e. address/#)
 
 **Day 6: CSS Styling, demo page for chrome extension** 
 
 By the end of the day:
-- [ ] Have components/HTML styled nicely using CSS.
+- [X] Have components/HTML styled nicely using CSS.
 - [X] Create icon for extension
 - [ ] Set up github page for the extension.
 - [ ] Mock up wireframes for how the demo page will look 
