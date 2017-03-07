@@ -21,7 +21,7 @@ footer, small {
 }
 
 ul, ol, li{
-  list-style: sphere;
+  list-style: none;
 }
 
 /* Clearfix */

@@ -1,6 +1,8 @@
 import React from 'react'
 import {withRouter, Link } from 'react-router';
 
+var Slider = require('react-slick');
+
 class ResultDetail extends React.Component{
    constructor(props){
     super(props);
@@ -49,6 +51,14 @@ class ResultDetail extends React.Component{
   }
 
   render(){
+
+   var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
 
     let {businessName, individualBusiness} = this.props;
 
@@ -107,6 +117,8 @@ class ResultDetail extends React.Component{
 
 // ...until sometime later today
 if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday) {
+  console.log(currentTime)
+  console.log(openingTimeToday)
   let openingTime = this.addSemiColon(this.twelveHourFormat(openingTimeToday))
   let amOrPm = this.amOrPm(openingTimeToday)
 
@@ -137,16 +149,16 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
 
   // OPEN
 } else if (individualBusiness.openOrNot === "Open" &&  
-                        individualBusiness.hours[currentDay][0] === individualBusiness.hours[currentDay][1]){ // 24 hrs
+                        (individualBusiness.hours[currentDay][0] === individualBusiness.hours[currentDay][1] ||
+                        individualBusiness.hours[currentDay][0] === 0 && individualBusiness.hours[currentDay][1] === 2400)){ // 24 hrs
   timeStatement = 'all day (24 hours) today!'
 } else if (individualBusiness.openOrNot === "Open") { // less than 24 hrs
     let formattedEnd = this.addSemiColon(this.twelveHourFormat(closingTimeToday))
     let amOrPm = this.amOrPm(closingTimeToday)
     timeStatement = `until ${formattedEnd} ${amOrPm}`
 } else {
-  timeStatement = '(info on hours currently unavailable)'
+  timeStatement = '(info currently unavailable)'
 }
-
 
 
 
@@ -180,21 +192,39 @@ if (individualBusiness.openOrNot === "Closed" && currentTime < openingTimeToday)
             to={'/'}>new search </Link><br/>
 
         <div className="big-results-text"><br/>
-          <p className="search-instructions results-text business-name">{individualBusiness.name} is </p>
+          <p className="search-instructions results-text">{individualBusiness.name} is </p>
           <p className={openClass}>{individualBusiness.openOrNot}</p>
           <p className="search-instructions results-text">{timeStatement}</p>
               </div>
-       <div className="technical-details">
-        <div className="phone-side">
-          <img className="icon"src = '../../../assets/images/phone_vector_small.png'/>
-          <p>{formattedPhone}</p><br/> 
-        </div>
+         <div className="technical-details">
+          <div className="phone-side">
+            <img className="icon" 
+              src = '../../../assets/images/phone_vector_small.png'/>
+            <p>{formattedPhone}</p><br/> 
+          </div>
 
-        <div className="address-side">
-        <img title="Click address to open in Google Maps" alt="Click address to open in Google Maps" className="icon"src = '../../../assets/images/pin_vector_small.png'/>
-          {address}
-        </div>
-        </div>
+          <div className="address-side">
+          <img 
+            title="Click address to open in Google Maps" alt="Click address to open in Google Maps" 
+            className="icon"
+            src = '../../../assets/images/pin_vector_small.png'/>
+            {address}
+          </div>
+        <img className="icon" 
+             src ="../../../assets/images/clock_vector.png"/>
+        <p className="future-hours">Future Hours:</p>
+
+        <Slider {...settings}
+          className="carousel-container">
+
+          <h3 className="subtagline">make playlists</h3>
+        
+          <h3 className="subtagline">save playlists</h3>
+
+          <h3 className="subtagline">browse other playlists!</h3>
+         </Slider>
+
+          </div>
       </div>
       )
   }
