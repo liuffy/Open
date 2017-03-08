@@ -10,15 +10,15 @@ Open is a Chrome Extension that lets you check if a business is open without nav
 ## Features
 
 ### Geolocation
-![Search](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_600/v1489002255/google-ext-screen1_kgddal.png)
+![Search](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_800/v1489002255/google-ext-screen1_kgddal.png)
 To search for a business near you, manually enter a location or let Open calculate your current location using the HTML5 geolocation API. Open will only track your current location during searches.  
 
 ### Minimalist Design
-![Results](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_600/v1489002259/google-ext-screen2_pnrdhy.png)
+![Results](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_800/v1489002259/google-ext-screen2_pnrdhy.png)
 Open only displays the most essential information needed to plan effectively, such as hours of operation, address, and phone number.
 
 ### Easy Navigation
-![Details](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_600/v1489002257/google-ext-screen3_dqrvy8.png)
+![Details](http://res.cloudinary.com/liuffy/image/upload/c_scale,w_800/v1489002257/google-ext-screen3_dqrvy8.png)
 Users can perform multiple searches with a minimal amount of clicks and input.
 
 
