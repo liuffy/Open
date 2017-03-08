@@ -19,7 +19,6 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
         .accessToken(clientId, clientSecret)
         .then(response => {
           const client = yelp.client(response.jsonBody.access_token);
-          console.log(response)
           client
             .search(searchRequest)
             .then(response => {
@@ -133,7 +132,6 @@ export const getBusinessData = (dataObject) => {
     .map(function (id) {
       return new Promise((resolve, reject) => {
         const resultObject = {}
-        // console.log(resultObject, 'result object'); Convert dashed IDs to camelCase
         let camelCasedName = id.replace(/-([a-z0-9])/g, function (g) {
           return g[1].toUpperCase();
         });
@@ -156,13 +154,11 @@ export const getBusinessData = (dataObject) => {
           .then(client => client.business(id))
           .then(response => {
 
-            console.log(response)
             resultObject[camelCasedName]["address"] = response
               .jsonBody
               .location
               .display_address
               .toString();
-            // Openness console.log('hey now', resultObject[camelCasedName]["address"])
             let openOrNot;
             if (response.jsonBody.hours && response.jsonBody.hours[0].is_open_now === true){
               openOrNot ='Open'

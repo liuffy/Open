@@ -79,7 +79,6 @@ class SearchForm extends React.Component {
        <input 
           className="standard-input-field main-search"
           type='text'
-          // value={nameQuery}
           placeholder="ex: Burma Superstar, tacos, CVS"
           onChange={this.update('nameQuery')} />
 
@@ -104,7 +103,6 @@ class SearchForm extends React.Component {
          <input 
           className="standard-input-field locationQuery reveal-if-active"
           type='text'
-          // value={locationQuery}
           placeholder="ex: Webster St, Oakland"
           onChange={this.update('locationQuery')} />
 
