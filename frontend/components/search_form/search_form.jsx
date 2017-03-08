@@ -29,7 +29,7 @@ class SearchForm extends React.Component {
       },
  
       (error) => alert(error),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
     );
  
   }
@@ -43,8 +43,6 @@ class SearchForm extends React.Component {
 
 
     if (document.getElementById('current_location_button').checked && position !== ""){
-        console.log('cmon lat', lat)
-      console.log('cmon lng', lng)
       lat = position.coords.latitude;
       lng = position.coords.longitude;
     

@@ -37,6 +37,9 @@ class ResultsIndex extends React.Component {
     
   <img className="loader-logo" src="../../../assets/images/open_cursive.png"/>
   <span className="loader-text">Searching for the best matches...</span>
+    <Link 
+          className="results-button waiting"
+          to={'/'}>&times; cancel</Link>
 </div> :
 		<div className="result-index">
 

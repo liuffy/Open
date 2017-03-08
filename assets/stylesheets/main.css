@@ -327,9 +327,9 @@ textarea:focus, input:focus{
 
 
 .index-item{
-  border:1px solid rgb(172, 175, 175);
   margin: 15px 0px;
   background:rgba(255,255,255, 0.7);
+  border:1px solid rgb(172, 175, 175);
   box-shadow:
   rgba(172, 175, 175, 0.5) 1px 1px,
   rgba(172, 175, 175, 0.4) 2px 2px,
@@ -461,6 +461,7 @@ textarea:focus, input:focus{
   word-wrap: break-word;
   display:inline-block;
   float:left;
+  margin-right:15px;
   width:140px;
   letter-spacing:1px;
   text-align:center;
@@ -570,14 +571,17 @@ textarea:focus, input:focus{
 
 
 .display-date{
+  cursor:pointer;
   margin-top:10px;
   margin-left:40%;
-  font-size:14px;
+  font-size:12px;
   margin-bottom:10px;
-  color: #545656;
+  color: #7e5ded;
+  font-weight:600;
 }
 
 .display-hours{
+  cursor:pointer;
   font-family: 'Raleway', sans-serif;
   margin-top:8%;
   font-weight:600;
@@ -601,10 +605,10 @@ textarea:focus, input:focus{
 }
 
 .image-url{
-  background-position: center center;
   float:left;
-  height:60px;
+  height:110px;
   width:auto;
+  background-position: center center;
   /*border-radius:50px;*/
 }
 
@@ -630,9 +634,33 @@ textarea:focus, input:focus{
   margin-top:10px;
   animation: hovery 1s infinite;
   height:20px;
+  cursor:pointer;
+  transition: all 0.15s ease 0s;
 }
 
 .purp{
   color: #7e5ded;
   text-shadow: 2px 2px rgba(126, 93, 237, 0.1);
+}
+
+.waiting{
+  padding:3px 8px !important;
+  position:absolute;
+  margin-top:60%;
+  margin-left:10%;
+  border-radius:20px;
+  font-size: 12px;
+   background:white;
+  color: rgb(121, 122, 122) !important;
+  border:2px solid rgb(121, 122, 122);
+   box-shadow:
+    rgba(121, 122, 122, 0.5) 1px 1px,
+    rgba(121, 122, 122, 0.4) 2px 2px,
+    rgba(121, 122, 122, 0.3) 3px 3px,
+    rgba(121, 122, 122, 0.2) 4px 4px;
+}
+
+.waiting:hover{
+  color:white;
+  background: rgb(121, 122, 122) !important;
 }

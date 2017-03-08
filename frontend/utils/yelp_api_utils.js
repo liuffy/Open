@@ -18,7 +18,6 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
       searchRequest.term = nameInput;
       searchRequest.limit = '5';
       let businessIds = [];
-      console.log('We have calculated the users location')
 
       yelp
         .accessToken(clientId, clientSecret)
@@ -38,7 +37,6 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
                 .jsonBody
                 .businesses
                 .forEach(function (business) {
-                  console.log('We have made a call to the Yelp API the forEach is happening')
                   // Only grab business IDs of places within 3 miles of user's location
                   if (business.distance < 4828.03) {
                     businessIds.push(business.id)
@@ -72,8 +70,8 @@ export const getLocalBusinesses = (nameInput, lat, lng) => {
 
 // This works fine
 export const getBusinessesByCity = (nameInput, locationInput) => {
-  return new Promise((resolve, reject) => {
 
+  return new Promise((resolve, reject) => {
     searchRequest = {
       term: nameInput,
       location: locationInput,
@@ -86,8 +84,6 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
         client
           .search(searchRequest)
           .then(response => {
-
-            console.log(response)
 
             let businessIds = [];
             let businessDistances = {};
@@ -193,6 +189,7 @@ export const getBusinessData = (dataObject) => {
                 .forEach(function (dayObject) {
                   let setDate = dayObject.day === 6 ? 0 : dayObject.day + 1
                   let inCaseMidnight;
+                  let inCaseMidnight2
 
                   if (Number(dayObject.end) === 0){
                     inCaseMidnight = 2400
@@ -200,8 +197,14 @@ export const getBusinessData = (dataObject) => {
                     inCaseMidnight = Number(dayObject.end)
                   }
 
+                   if (Number(dayObject.start) === 0){
+                                    inCaseMidnight2 = 2400
+                                  } else {
+                                    inCaseMidnight2 = Number(dayObject.start)
+                                  }
 
-                  businessHours[setDate] = [Number(dayObject.start), inCaseMidnight, dayObject.is_overnight]
+
+                  businessHours[setDate] = [inCaseMidnight2, inCaseMidnight, dayObject.is_overnight]
                   resultObject[camelCasedName]["hours"] = businessHours;
                 })
             }
