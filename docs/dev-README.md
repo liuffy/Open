@@ -104,7 +104,7 @@ By the end of the day:
 - [X] Create icon for extension
 - [ ] Set up github page for the extension.
 - [ ] Mock up wireframes for how the demo page will look 
-- [ ] Grab nice looking screenshots from the chrome extension
+- [X] Grab nice looking screenshots from the chrome extension
 - [ ] Make a few gifs that shows off the key features of the chrome extension
 
 **Day 7: Deploying and distribution**
