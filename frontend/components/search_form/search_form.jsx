@@ -24,7 +24,6 @@ class SearchForm extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({position});
-        console.log(position)
 
       },
  

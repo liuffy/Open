@@ -7,12 +7,8 @@ let searchRequest = {};
 
 export const getLocalBusinesses = (nameInput, lat, lng) => {
 
-  // Instead of returning a value, I need to return a promise. So, I simply wrap
-  // the function in a promise, resolving the value (dataObject)!
   return new Promise((resolve, reject) => {
 
-
-      // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude', longitude);
       searchRequest.latitude = lat;
       searchRequest.longitude = lng;
       searchRequest.term = nameInput;
@@ -128,8 +124,7 @@ export const getBusinessesByCity = (nameInput, locationInput) => {
 
 }
 
-// What do we want to output? A businessObject that contains objects for each of
-// the ids    Each businessObject has all the info for itself
+
 export const getBusinessData = (dataObject) => {
   // creates an empty object for each idea within the larger ResultObject
 
@@ -229,31 +224,3 @@ export const getBusinessData = (dataObject) => {
   })
 
 }
-
-function findLocation() {
-  const options = {
-    enableHighAccuracy: false,
-    maximumAge: Infinity,
-    timeout: 20000
-  }
-  return new Promise((resolve, reject) => {
-    return navigator
-      .geolocation
-      .getCurrentPosition(resolve, reject, options)
-  })
-}
-
-function findLocationSuccess(pos) {
-  console.log('Successfully found location!')
-
-  const {latitude, longitude} = pos;
-  // console.log('[findLocationSuccess]', 'latitude', latitude, 'longitude',
-  // longitude)
-  searchRequest.latitude = latitude;
-  searchRequest.longitude = longitude;
-};
-
-function findLocationError(err) {
-  console.warn('[findLocationError]', err.code, err.message, err);
-};
-
