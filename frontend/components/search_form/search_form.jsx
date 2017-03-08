@@ -35,7 +35,6 @@ class SearchForm extends React.Component {
   }
 
   handleSubmit(e) {
-
     let struggleText = "";
     e.preventDefault();
     let {nameQuery, locationQuery, position, lat, lng} = this.state; // What we're actually typing into the form

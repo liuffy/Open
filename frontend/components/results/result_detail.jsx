@@ -3,8 +3,6 @@ import {withRouter, Link } from 'react-router';
 
 var Slider = require('react-slick');
 
-            
-            
 let weekday = new Array(7);
             weekday[1]="Monday";
             weekday[2]="Tuesday";

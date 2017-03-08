@@ -650,6 +650,7 @@ textarea:focus, input:focus{
   margin-top:60%;
   margin-left:10%;
   border-radius:20px;
+  font-weight: 400 !important;
   font-size: 12px;
    background:white;
   color: rgb(171, 173, 171) !important;
