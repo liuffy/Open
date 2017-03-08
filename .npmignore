@@ -1,2 +1,6 @@
 *.pem
 test/*
+
+/node_modules/public-encrypt/test/test_key.pem
+/node_modules/public-encrypt/test/test_rsa_pubkey.pem
+/node_modules/public-encrypt/test/test_key.pem
