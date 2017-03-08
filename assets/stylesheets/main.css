@@ -23,7 +23,7 @@ body{
 
 @keyframes hovery {
   0%, 100% {
-    opacity: 0.5;
+    opacity: 0.2;
     animation-timing-function: ease-out;
   }
   50% {
@@ -627,12 +627,13 @@ textarea:focus, input:focus{
 }
 
 .calculating{
+  font-size:12px;
   text-align:center;
   font-weight:600;
   text-shadow: 2px 2px rgba(126, 93, 237, 0.1);
   color: #7e5ded;
   margin-top:10px;
-  animation: hovery 1s infinite;
+  animation: hovery 2s infinite;
   height:20px;
   cursor:pointer;
   transition: all 0.15s ease 0s;
@@ -651,16 +652,16 @@ textarea:focus, input:focus{
   border-radius:20px;
   font-size: 12px;
    background:white;
-  color: rgb(121, 122, 122) !important;
-  border:2px solid rgb(121, 122, 122);
+  color: rgb(171, 173, 171) !important;
+  border:1px solid rgb(171, 173, 171);
    box-shadow:
-    rgba(121, 122, 122, 0.5) 1px 1px,
-    rgba(121, 122, 122, 0.4) 2px 2px,
-    rgba(121, 122, 122, 0.3) 3px 3px,
-    rgba(121, 122, 122, 0.2) 4px 4px;
+    rgba(171, 173, 171, 0.5) 1px 1px,
+    rgba(171, 173, 171, 0.4) 2px 2px,
+    rgba(171, 173, 171, 0.3) 3px 3px,
+    rgba(171, 173, 171, 0.2) 4px 4px;
 }
 
 .waiting:hover{
   color:white;
-  background: rgb(121, 122, 122) !important;
+  background: rgb(171, 173, 171) !important;
 }

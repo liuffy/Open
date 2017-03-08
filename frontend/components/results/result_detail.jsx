@@ -198,7 +198,7 @@ if (individualBusiness.openOrNot === "n/a"){
 
               openDays.map( (item, idx) => ( 
               <div className="tester" key={idx+1}>
-                  <span className="display-hours" key={idx+3}>{this.addSemiColon(this.twelveHourFormat(individualBusiness.hours[item][0]))} {this.amOrPm(individualBusiness.hours[item][0])} &#8212;
+                  <span className="display-hours" key={idx+3}>{this.addSemiColon(this.twelveHourFormat(individualBusiness.hours[item][0]))} {this.amOrPm(individualBusiness.hours[item][0])}&#8212;
     {this.addSemiColon(this.twelveHourFormat(individualBusiness.hours[item][1]))} {this.amOrPm(individualBusiness.hours[item][1])}</span>
                   <p className="display-date" key={idx+2}>{weekday[item]}</p>
               </div>))
