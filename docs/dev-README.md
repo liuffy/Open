@@ -117,13 +117,14 @@ By the end of the day:
 
 - Will share link to Google Chrome extension in: 
 - [ ] Facebook groups such as:
-  - [ ] **Techy Wendy** (Tech-focused group for Wellesley College alumni) 
+  - [X] **Techy Wendy** (Tech-focused group for Wellesley College alumni) 
   - [ ] **Community** (large Facebook group for Wellesley College alumni) 
   - [ ] **Wellesley By the Bay** (Facebook group for Wellesley alumni living in the bay area) 
+  - [ ] General Facebook page
 - [ ] Reddit forums such as:
-  - [ ] **/r/chrome_extensions/**
-  - [ ] **/r/webdev/**
-  - [ ] **/r/IMadeThis/**
+  - [X] **/r/chrome_extensions/**
+  - [X] **/r/webdev/**
+  - [X] **/r/IMadeThis/**
   - [ ] **/r/chrome/**
 
 ## Bonus Features :sparkles:
