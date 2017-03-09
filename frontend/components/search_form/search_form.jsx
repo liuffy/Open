@@ -10,35 +10,41 @@ class SearchForm extends React.Component {
        locationQuery: "",
        position: "",
        lat:"",
-       lng:""
+       lng:"",
+       citySearch:false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   update(property){
-  	return e => this.setState({[property]: e.target.value});
+    return e => this.setState({[property]: e.target.value});
   }
 
   componentDidMount() {
- 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({position});
+    
+    if (navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.setState({position});
 
-      },
- 
-      (error) => alert(error),
-      {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
-    );
+        },
+          
+        (error) => document.getElementById('search_city_button').checked = true,
+                
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+      
+    } else {
+      console.log('Geolocation seems to be down right now.')
+    }
  
   }
 
   handleSubmit(e) {
     let struggleText = "";
     e.preventDefault();
-    let {nameQuery, locationQuery, position, lat, lng} = this.state; // What we're actually typing into the form
+    let {nameQuery, locationQuery, position, lat, lng, citySearch} = this.state; // What we're actually typing into the form
     let {createLocalResults, createCityResults} = this.props;
-
 
     if (document.getElementById('current_location_button').checked && position !== ""){
       lat = position.coords.latitude;
@@ -48,7 +54,7 @@ class SearchForm extends React.Component {
         this.props.router.push(`/results`)
     }else if (locationQuery.length > 0 && nameQuery.length > 0 && document.getElementById('search_city_button').checked){
        createCityResults(nameQuery, locationQuery)
-      this.props.router.push(`/results`)
+       this.props.router.push(`/results`)
     } else {
       struggleText = "One or more fields missing :-("
     }
@@ -56,16 +62,17 @@ class SearchForm extends React.Component {
 
 
   render(){
-  	let {nameQuery, locationQuery, position, lat, lng} = this.state;
+    let {nameQuery, locationQuery, position, lat, lng, citySearch} = this.state;
 
     let button;
-    if (position !== "" || locationQuery !== ""){
+    if (citySearch === true || position !== "" || locationQuery !== ""){
       button = <button className="search-button">check</button>
     } else {
        button = <p className="calculating">Calculating your location...</p>
+               
     }
 
-  	return(
+    return(
 
       <div>
 
@@ -98,7 +105,7 @@ class SearchForm extends React.Component {
                id="search_city_button"
                className="cityInput"
                name='searchOption'
-               value="citySearch"/> Near (address, street, or city): <br/>
+               value="citySearch"/> Enter location (address, street, or city) <br/>
 
          <input 
           className="standard-input-field locationQuery reveal-if-active"
