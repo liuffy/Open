@@ -588,10 +588,21 @@ textarea:focus, input:focus{
   text-shadow: 2px 2px rgba(126, 93, 237, 0.1);
   color: #7e5ded;
   margin-top:10px;
-  animation: hovery 2s infinite;
   height:20px;
+  animation: hovery 2s infinite;
   cursor:pointer;
   transition: all 0.15s ease 0s;
+}
+
+
+.failure-message{
+  font-size:12px;
+  text-align:center;
+  font-weight:600;
+  text-shadow: 2px 2px rgba(98, 102, 101, 0.1);
+  color: #797a7a;
+  margin-top:10px;
+  height:20px;
 }
 
 .purp{

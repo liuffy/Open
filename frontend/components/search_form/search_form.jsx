@@ -11,7 +11,8 @@ class SearchForm extends React.Component {
        position: "",
        lat:"",
        lng:"",
-       citySearch:false
+       citySearch:false,
+       failMessage:""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,6 +22,8 @@ class SearchForm extends React.Component {
   }
 
   componentDidMount() {
+
+    let {citySearch, failMessage} = this.state;
     
     if (navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
@@ -29,7 +32,11 @@ class SearchForm extends React.Component {
 
         },
           
-        (error) => document.getElementById('search_city_button').checked = true,
+        (error) => {
+          this.setState({citySearch: true})
+          this.setState({failMessage: "Geolocation currently unavailable"})
+          document.getElementById('search_city_button').checked = true
+        },
                 
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
@@ -62,7 +69,7 @@ class SearchForm extends React.Component {
 
 
   render(){
-    let {nameQuery, locationQuery, position, lat, lng, citySearch} = this.state;
+    let {nameQuery, locationQuery, position, lat, lng, citySearch, failMessage} = this.state;
 
     let button;
     if (citySearch === true || position !== "" || locationQuery !== ""){
@@ -70,6 +77,13 @@ class SearchForm extends React.Component {
     } else {
        button = <p className="calculating">Calculating your location...</p>
                
+    }
+
+    let failMes;
+    if (citySearch === true){
+      failMes = <p className="failure-message">{failMessage}</p>
+    } else {
+      failMes = <div></div>
     }
 
     return(
@@ -114,7 +128,7 @@ class SearchForm extends React.Component {
           onChange={this.update('locationQuery')} />
 
        {button}
-             
+       {failMes}
         </form>
       </div>
 
