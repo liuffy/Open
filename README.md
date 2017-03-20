@@ -2,8 +2,8 @@
 
 ![Open logo](http://res.cloudinary.com/liuffy/image/upload/c_scale,q_100,w_128/v1487453773/open_cursive_d0zsgn.png)
 
-[Get Open for Google Chrome][open]
-[open]: https://chrome.google.com/webstore/detail/open/eopgolhpjpkpkkbjenhicbajeodohbae?authuser=1
+
+[Get Open for Google Chrome](https://chrome.google.com/webstore/detail/open/eopgolhpjpkpkkbjenhicbajeodohbae?authuser=1)
 
 Open is a Chrome Extension that lets you check if a business is open without navigating to external websites. All data retrieved comes from the [Yelp Fusion API](https://www.yelp.com/developers).
 
