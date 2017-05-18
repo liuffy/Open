@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import ResultIndexItem from './result_index_item';
 
 

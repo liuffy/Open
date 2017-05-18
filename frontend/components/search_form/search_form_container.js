@@ -1,7 +1,7 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import SearchForm from './search_form';
-import {createLocalResults, 
-        createCityResults} from '../../actions/search_actions';
+import { createLocalResults, 
+        createCityResults } from '../../actions/search_actions';
 
 
 const mapStateToProps = (state) =>({

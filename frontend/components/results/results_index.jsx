@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter, Link} from 'react-router';
+import { withRouter, Link } from 'react-router';
 import ReactDOM from 'react-dom';
 import ResultIndexItem from './result_index_item';
 
@@ -14,7 +14,7 @@ class ResultsIndex extends React.Component {
   	const {results, loading} = this.props;
   	let loadedResults;
 
-
+    // Error message if user mashes their keyboard
     if (Object.keys(results).length === 0){
       loadedResults = <div><span className="no-matches-text">No matches!</span>
                       <span className="no-matches-text-small">This is likely due to the following:</span>

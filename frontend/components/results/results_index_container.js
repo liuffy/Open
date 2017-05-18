@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import ResultsIndex from './results_index';
 import { selectResults } from '../../reducers/selectors';
 
